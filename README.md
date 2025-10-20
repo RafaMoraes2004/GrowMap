@@ -1,4 +1,4 @@
-# GrowMap Analise e desenvolvimentos de Habilidades
+# GrowMap - Analise e desenvolvimentos de Habilidades
 
 O GrowMap é uma **plataforma web** desenvolvida em **Angular, TypeScript, HTML e CSS** voltada para **gestão e análise de colaboradores**.  
 Com ele, gestores podem acompanhar o desenvolvimento de habilidades, identificar pontos fortes e áreas que precisam de aprimoramento, e tomar decisões mais estratégicas sobre seus recursos humanos.
