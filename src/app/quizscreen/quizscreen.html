@@ -1,0 +1,62 @@
+<div class="quiz-container" *ngIf="!isGameOver && !isGameWon">
+
+  <div class="quiz-header">
+    <div class="question-counter">
+      QUESTION {{ currentQuestionIndex + 1 }} / {{ questions.length }}
+    </div>
+    <div class="lives-counter">
+      <span class="heart" *ngFor="let life of [].constructor(lives)">❤️</span>
+    </div>
+  </div>
+
+  <div class="quiz-body">
+    <div class="pixel-title">GROWMAP QUIZ</div>
+     <br>
+    <div class="question-box">
+      {{ questions[currentQuestionIndex].text }}
+    </div>
+    <br>
+    <div class="question-image-container" 
+         *ngIf="questions[currentQuestionIndex].imagePath">
+      
+      <img [src]="questions[currentQuestionIndex].imagePath" 
+           alt="Contexto da Pergunta">
+    </div>
+    <br>
+    <div class="options-container">
+      <button 
+        class="option-button" 
+        *ngFor="let option of questions[currentQuestionIndex].options"
+        (click)="selectAnswer(option)">
+        <span class="option-icon">👾</span> {{ option }}
+      </button>
+    </div>
+  </div>
+
+</div>
+
+<div class="game-over-container" *ngIf="isGameOver">
+  <div class="invasion-title">
+    ⚠️ ⚠️ ⚠️
+    INVASION!
+  </div>
+  <div class="lives-remaining">
+    Lives remaining: 0
+  </div>
+  <button class="try-again-button" (click)="resetQuiz()">
+    TRY AGAIN
+  </button>
+</div>
+
+<div class="game-won-container" *ngIf="isGameWon">
+  <div class="won-title">
+    🚀
+    YOU WON!
+  </div>
+  <div class="final-score">
+    You finished with {{ lives }} lives!
+  </div>
+  <button class="try-again-button" (click)="resetQuiz()">
+    PLAY AGAIN
+  </button>
+</div>

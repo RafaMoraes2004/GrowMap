@@ -1,0 +1,92 @@
+<header class="navbar">
+    <div class="nav-left">
+      <div class="logo"></div>
+      <span class="brand">GrowMap</span>
+    </div>
+  
+    <nav class="nav-center" id="main-nav">
+      <a class="nav-link" routerLink="/home" routerLinkActive="active">Home</a>
+      <a class="nav-link" routerLink="/sobre" routerLinkActive="active">Sobre</a>
+      <a class="nav-link" routerLink="/planos" routerLinkActive="active">Orçamento</a>
+      <a class="nav-link" routerLink="/parceiros" routerLinkActive="active">Parceiros</a>
+      <a class="nav-link" routerLink="/feedback" routerLinkActive="active">Feedback</a>
+    </nav>
+  
+    <div class="nav-right">
+      <button class="login-btn" routerLink="/login">Login</button>
+      <button id="hamburger" class="hamburger" aria-label="Abrir menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+  
+  <!-- =========================
+       BENEFÍCIOS
+       ========================= -->
+  <section class="benefits-section fade-in">
+    <div class="container">
+      <h1>Benefícios de ser um parceiro GrowMap</h1>
+      <p>Ao se tornar um parceiro da GrowMap, sua empresa ganha visibilidade, conexões estratégicas e acesso a soluções inteligentes para impulsionar o crescimento e a inovação.</p>
+  
+      <div class="benefits-grid">
+        <div class="benefit-card">
+          <h3>🌐 Aumento de Visibilidade</h3>
+          <p>Divulgação da sua marca em nossos canais e eventos corporativos.</p>
+        </div>
+        <div class="benefit-card">
+          <h3>🤝 Conexões Estratégicas</h3>
+          <p>Networking com empresas e profissionais do setor de tecnologia e inovação.</p>
+        </div>
+        <div class="benefit-card">
+          <h3>🚀 Crescimento Conjunto</h3>
+          <p>Parcerias voltadas para resultados, com benefícios mútuos e desenvolvimento contínuo.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- =========================
+       NOSSOS PARCEIROS
+       ========================= -->
+  <section class="partners-section fade-in" id="partners">
+    <div class="container">
+      <h2>Nossos Parceiros</h2>
+  
+      <div class="partner-cards">
+        <div class="partner-card">
+          <img src="assets/img/facens.png" alt="Logo da Facens">
+          <h3>Facens - Faculdade de Engenharia em Sorocaba</h3>
+          <p>A Facens é um centro universitário de excelência em tecnologia e inovação, formando profissionais preparados para os desafios do futuro.</p>
+        </div>
+  
+        <div class="partner-card">
+          <img src="assets/img/face.png" alt="Logo do Face">
+          <h3>Face - Facens Centro de Empreendedorismo</h3>
+          <p>O FACE é o Centro de Empreendedorismo da Facens, que incentiva ideias inovadoras e o desenvolvimento de projetos, empresas e startups.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- =========================
+       FORMULÁRIO DE CONTATO
+       ========================= -->
+  <section class="contact-section fade-in">
+    <div class="container">
+      <h2>Quer ser nosso parceiro?</h2>
+      <p>Preencha o formulário abaixo e entraremos em contato o mais breve possível.</p>
+  
+      <form class="contact-form" (submit)="$event.preventDefault()">
+        <input type="text" placeholder="Nome da Empresa" required>
+        <input type="email" placeholder="E-mail para Contato" required>
+        <input type="tel" placeholder="Telefone" required>
+        <textarea placeholder="Descreva sua proposta de parceria..." required></textarea>
+        <button type="submit">Enviar Proposta</button>
+      </form>
+    </div>
+  </section>
+  
+  <!-- ========================= FOOTER ========================= -->
+  <footer>
+    © 2025 GrowMap — Desenvolvido por alunos de ADS - Facens, Sorocaba/SP
+  </footer>

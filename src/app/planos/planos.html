@@ -1,0 +1,75 @@
+<header class="navbar">
+    <div class="nav-left">
+      <div class="logo"></div> <span class="brand">GrowMap</span>
+    </div>
+  
+    <nav class="nav-center" id="main-nav">
+      <a class="nav-link" routerLink="/home" routerLinkActive="active">Home</a>
+      <a class="nav-link" routerLink="/sobre" routerLinkActive="active">Sobre</a>
+      <a class="nav-link" routerLink="/planos" routerLinkActive="active">Orçamento</a>
+      <a class="nav-link" routerLink="/parceiros" routerLinkActive="active">Parceiros</a>
+      <a class="nav-link" routerLink="/feedback" routerLinkActive="active">Feedback</a>
+    </nav>
+  
+    <div class="nav-right">
+      <button class="login-btn" routerLink="/login">Login</button>
+  
+      <!-- Hamburger (mobile) -->
+      <button id="hamburger" class="hamburger" aria-label="Abrir menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+  
+  <section class="plans card-section fade-in" id="plans">
+    <div class="container">
+      <h2>Solicite um Orçamento</h2>
+      <p>Receba um orçamento personalizado para sua empresa e descubra como o GrowMap pode potencializar suas
+        habilidades corporativas.</p>
+  
+      <!-- Benefícios / Recursos -->
+      <div class="plan-benefits fade-in" style="margin-bottom:30px; color:var(--muted);">
+        <ul style="list-style-type: disc; display:inline-block; text-align:left; margin-top:10px;">
+          <li>Relatórios detalhados de desempenho</li>
+          <li>Trilhas de aprendizado personalizadas</li>
+          <li>Automação de processos para aumentar produtividade</li>
+          <li>Segurança de dados avançada</li>
+          <li>Suporte dedicado</li>
+        </ul>
+      </div>
+  
+      <!-- Formulário de orçamento -->
+      <form class="contact-form" id="budget-form" (submit)="$event.preventDefault()">
+        <div class="row">
+          <input type="text" name="name" placeholder="Seu nome" required />
+          <input type="email" name="email" placeholder="Seu e-mail" required />
+        </div>
+  
+        <div class="row">
+          <input type="text" name="company" placeholder="Nome da empresa" required />
+          <input type="tel" name="phone" placeholder="Telefone" required />
+        </div>
+  
+        <div class="row">
+          <input type="number" name="employees" placeholder="Número de funcionários" min="1" required />
+          <input type="number" name="departments" placeholder="Número de setores" min="1" required />
+          <input type="number" name="admins" placeholder="Número de administradores" min="1" required />
+        </div>
+  
+        <textarea name="message" placeholder="Detalhes adicionais / Mensagem" rows="5"></textarea>
+  
+        <div class="form-actions" style="text-align:center; margin-top:10px;">
+          <button type="submit" class="btn-primary">Enviar</button>
+        </div>
+      </form>
+  
+      <p style="text-align:center; margin-top:20px; color:var(--muted);">
+        Preencha o formulário e nossa equipe entrará em contato em breve com uma proposta sob medida para a sua
+        empresa!
+      </p>
+    </div>
+  </section>
+  
+  <footer>
+    © 2025 GrowMap — Desenvolvido por alunos de ADS - Facens, Sorocaba/SP
+  </footer>

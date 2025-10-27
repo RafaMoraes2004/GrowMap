@@ -1,0 +1,70 @@
+<header class="navbar">
+    <div class="nav-left">
+      <div class="logo"></div>
+      <span class="brand">GrowMap</span>
+    </div>
+  
+    <nav class="nav-center" id="main-nav">
+      <a class="nav-link" routerLink="/home" routerLinkActive="active">Home</a>
+      <a class="nav-link" routerLink="/sobre" routerLinkActive="active">Sobre</a>
+      <a class="nav-link" routerLink="/planos" routerLinkActive="active">Orçamento</a>
+      <a class="nav-link" routerLink="/parceiros" routerLinkActive="active">Parceiros</a>
+      <a class="nav-link" routerLink="/feedback" routerLinkActive="active">Feedback</a>
+    </nav>
+  
+    <div class="nav-right">
+      <button class="login-btn" routerLink="/login">Login</button>
+      <button id="hamburger" class="hamburger" aria-label="Abrir menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+  
+  <!-- =========================
+         SEÇÃO DE FEEDBACK
+         ========================= -->
+  <section class="feedback-section fade-in" id="feedback">
+    <div class="feedback-box">
+      <h2>Deixe seu Feedback 💬</h2>
+      <p>Sua opinião é essencial para melhorarmos a experiência do GrowMap.</p>
+  
+      <div class="stars" role="radiogroup" aria-label="Avaliação">
+        <button
+          class="star"
+          type="button"
+          (click)="setRating(1)"
+          [class.active]="rating >= 1"
+          aria-pressed="{{rating >= 1}}"
+        >★</button>
+        <button class="star" type="button" (click)="setRating(2)" [class.active]="rating >= 2" aria-pressed="{{rating >= 2}}">★</button>
+        <button class="star" type="button" (click)="setRating(3)" [class.active]="rating >= 3" aria-pressed="{{rating >= 3}}">★</button>
+        <button class="star" type="button" (click)="setRating(4)" [class.active]="rating >= 4" aria-pressed="{{rating >= 4}}">★</button>
+        <button class="star" type="button" (click)="setRating(5)" [class.active]="rating >= 5" aria-pressed="{{rating >= 5}}">★</button>
+      </div>
+  
+      <textarea rows="5" placeholder="Escreva seu comentário aqui..." [(ngModel)]="comment"></textarea>
+      <button class="btn-primary" type="button" (click)="onSubmit()">Enviar Avaliação</button>
+      <p id="feedback-msg" class="feedback-msg" *ngIf="feedbackMsg">{{ feedbackMsg }}</p>
+    </div>
+  </section>
+  
+  <!-- =========================
+         SEÇÃO DE COMENTÁRIOS
+         ========================= -->
+  <section class="comments-section fade-in" id="comments">
+    <div class="comments-box">
+      <h2>O que as pessoas estão dizendo 🗨️</h2>
+  
+      <div class="comment" *ngFor="let c of comments">
+        <div class="comment-content">
+          <h4>{{ c.author }}</h4>
+          <span class="comment-date">{{ c.date }}</span>
+          <p>{{ c.text }}</p>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <footer>
+    © 2025 GrowMap — Desenvolvido por alunos de ADS - Facens, Sorocaba/SP
+  </footer>
