@@ -1,0 +1,154 @@
+<nav class="navbar">
+    <div class="logo">
+      <div class="user-avatar">
+        <svg width="40" height="40" viewBox="0 0 40 40">
+          <circle cx="20" cy="20" r="20" fill="url(#avatarGradient)" />
+          <text x="20" y="26" font-size="20" fill="#fff" text-anchor="middle" font-weight="bold">
+            {{ userName.charAt(0) }}
+          </text>
+          <defs>
+            <linearGradient id="avatarGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" style="stop-color:#2DF8E0" />
+              <stop offset="100%" style="stop-color:#4E3DE0" />
+            </linearGradient>
+          </defs>
+        </svg>
+      </div>
+      <div class="user-info">
+        <div class="user-name">{{ userName }}</div>
+        <div class="user-role">{{ userRole }}</div>
+      </div>
+    </div>
+    <div class="nav-center" [class.open]="mobileMenuOpen">
+      <a [routerLink]="['/dashboard']" class="nav-link">Dashboard</a>
+      <a [routerLink]="['/cursos']" class="nav-link">Cursos</a>
+      <a [routerLink]="['/contatos']" class="nav-link">Suporte</a>
+    </div>
+    <div class="nav-right">
+      <button class="theme-toggle" (click)="toggleTheme()" aria-label="Toggle theme">
+        <span class="theme-icon">{{ isDarkMode ? '☀️' : '🌙' }}</span>
+      </button>
+      <button class="logout-btn" aria-label="Logout">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+          <polyline points="16 17 21 12 16 7" />
+          <line x1="21" y1="12" x2="9" y2="12" />
+        </svg>
+      </button>
+      <button class="hamburger" [class.active]="mobileMenuOpen" (click)="toggleMobileMenu()">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+</nav>
+
+<div class="page-wrapper" [ngSwitch]="currentView">
+
+  <main *ngSwitchCase="'list'" class="course-list-container" @fadeSlide>
+
+    <div class="global-back-container">  <a [routerLink]="['/dashboard']" class="btn global-back-button"> <span class="icon">‹</span> Voltar para o Dashboard </a>
+    </div>
+
+    <header class="page-header"> <h1 class="page-title">Explorar Cursos</h1> </header>
+
+    <nav class="filter-tabs"> <button class="btn sort-tab-btn" [class.active]="activeFilter === 'all'" (click)="filterCourses('all')">Todos</button>
+       <button class="btn sort-tab-btn" [class.active]="activeFilter === 'new'" (click)="filterCourses('new')">Novos</button>
+       <button class="btn sort-tab-btn" [class.active]="activeFilter === 'popular'" (click)="filterCourses('popular')">Populares</button>
+       <button class="btn sort-tab-btn" [class.active]="activeFilter === 'enrolled'" (click)="filterCourses('enrolled')">Inscritos</button>
+    </nav>
+
+    <div class="course-grid">
+      <article
+        class="course-card"
+        *ngFor="let course of filteredCourses"
+        [class.enrolled]="enrollmentService.isEnrolled(course.id)"
+        (click)="selectCourse(course)"
+        @fadeSlide>
+
+        <span *ngIf="course.isNew" class="badge new">Novo</span>
+        <span *ngIf="course.isPopular" class="badge popular">Popular</span>
+        <span *ngIf="enrollmentService.isEnrolled(course.id)" class="badge enrolled">✔ Inscrito</span>
+
+        <div class="course-card-icon">{{ course.icon }}</div>
+        <div class="course-card-content">
+          <h3 class="course-card-title">{{ course.title }}</h3> <div class="course-card-info"> <span>{{ course.level }}</span>
+            <span>•</span>
+            <span>{{ course.estimatedTime }}</span>
+          </div>
+          <p class="course-card-subtitle">{{ course.subtitle }}</p> <footer class="course-card-footer">
+            <button
+              *ngIf="!enrollmentService.isEnrolled(course.id)"
+              class="btn btn-primary"
+              (click)="enroll($event, course)">
+              Inscrever-se
+            </button>
+            <a
+              *ngIf="enrollmentService.isEnrolled(course.id)"
+              [routerLink]="['/meus-cursos']"
+              class="btn btn-secondary"
+              (click)="onButtonNavigate($event)">
+              Ver em Meus Cursos
+            </a>
+          </footer>
+        </div>
+      </article>
+    </div>
+  </main>
+
+  <main *ngSwitchCase="'detail'" class="course-detail-container" @fadeSlide>
+
+    <div class="sticky-action-bar" *ngIf="selectedCourse">
+      <div class="sticky-bar-content">
+        <div class="sticky-bar-info"> <button class="btn back-button" (click)="goBackToList()"> <span class="icon">‹</span> </button>
+          <span class="sticky-bar-title">{{ selectedCourse.title }}</span> </div>
+        <div class="sticky-bar-actions">
+           <button
+            *ngIf="!enrollmentService.isEnrolled(selectedCourse.id)"
+            class="btn btn-primary"
+            (click)="enroll($event, selectedCourse)">
+            Inscrever-se agora
+          </button>
+          <a
+            *ngIf="enrollmentService.isEnrolled(selectedCourse.id)"
+            [routerLink]="['/meus-cursos']"
+            class="btn btn-secondary"
+            (click)="onButtonNavigate($event)">
+            Ir para o Curso
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <header class="course-detail-header" *ngIf="selectedCourse"> <h1 class="page-title">{{ selectedCourse.title }}</h1>
+        <p class="page-subtitle">{{ selectedCourse.subtitle }}</p>
+        <div class="course-card-info">
+          <span>{{ selectedCourse.level }}</span>
+          <span>•</span>
+          <span>{{ selectedCourse.estimatedTime }}</span>
+          <span *ngIf="selectedCourse.isPopular" class="badge popular small">Popular</span>
+        </div>
+    </header>
+
+    <section class="modules-accordion-container" *ngIf="selectedCourse"> <h2 class="modules-title">Conteúdo do Curso</h2>
+        <details class="module-accordion" *ngFor="let module of selectedCourse.modules" open>
+            <summary class="module-header">
+                <div class="module-header-text">
+                    <h3 class="module-title">{{ module.title }}</h3>
+                    <span class="module-subtitle">{{ getModuleLessonCount(module) }} aulas</span>
+                </div>
+            </summary>
+            <div class="module-content">
+                <ul class="lesson-list">
+                    <li *ngFor="let lesson of module.lessons" class="lesson-item-detail">
+                        <span class="lesson-icon">{{ lesson.type === 'video' ? '▶️' : (lesson.type === 'reading' ? '📄' : '❔') }}</span>
+                        <span class="lesson-title">{{ lesson.title }}</span>
+                        <span class="lesson-duration">{{ lesson.duration }}</span>
+                    </li>
+                </ul>
+            </div>
+        </details>
+    </section>
+
+  </main>
+</div>

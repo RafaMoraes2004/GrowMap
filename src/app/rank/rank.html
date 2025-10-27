@@ -1,0 +1,149 @@
+<nav class="navbar">
+    <div class="logo">
+      <div class="user-avatar">
+        <svg width="40" height="40" viewBox="0 0 40 40">
+          <circle cx="20" cy="20" r="20" fill="url(#avatarGradient)" />
+          <text x="20" y="26" font-size="20" fill="#fff" text-anchor="middle" font-weight="bold">
+            {{ userName.charAt(0) }}
+          </text>
+          <defs>
+            <linearGradient id="avatarGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" style="stop-color:#2DF8E0" />
+              <stop offset="100%" style="stop-color:#4E3DE0" />
+            </linearGradient>
+          </defs>
+        </svg>
+      </div>
+      <div class="user-info">
+        <div class="user-name">{{ userName }}</div>
+        <div class="user-role">{{ userRole }}</div>
+      </div>
+    </div>
+    <div class="nav-center" [class.open]="mobileMenuOpen">
+        <a [routerLink]="['/dashboard']" class="nav-link">Dashboard</a>
+        <a [routerLink]="['/cursos']" class="nav-link">Cursos</a>
+        <a [routerLink]="['/contatos']" class="nav-link">Suporte</a>
+    </div>
+    <div class="nav-right">
+      <button class="theme-toggle" (click)="toggleTheme()" aria-label="Toggle theme">
+        <span class="theme-icon">{{ isDarkMode ? '☀️' : '🌙' }}</span>
+      </button>
+      <button class="logout-btn" aria-label="Logout">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+          <polyline points="16 17 21 12 16 7" />
+          <line x1="21" y1="12" x2="9" y2="12" />
+        </svg>
+      </button>
+      <button class="hamburger" [class.active]="mobileMenuOpen" (click)="toggleMobileMenu()">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+</nav>
+
+<main class="rank-container" @fadeSlide>
+  
+  <div class="global-back-container">
+    <a [routerLink]="['/dashboard']" class="btn global-back-button">
+      <span class="icon">‹</span> Voltar para o Dashboard
+    </a>
+  </div>
+
+  <header class="page-header">
+    <h1 class="page-title">Ranking Geral</h1>
+  </header>
+
+  <section class="user-summary-section">
+    
+    <div class="detail-card my-scores-card">
+      <h3 class="detail-card-title">Minhas Pontuações</h3>
+      <div class="my-scores-grid">
+        <div class="score-item" *ngFor="let score of currentUserScores">
+          <span class="score-icon">{{ score.courseIcon }}</span>
+          <span class="score-name">{{ score.courseName }}</span>
+          <span class="score-percent">{{ score.scorePercent }}%</span>
+        </div>
+      </div>
+    </div>
+    
+    <div class="detail-card my-rank-card">
+      <h3 class="detail-card-title">Sua Posição</h3>
+      <div class="rank-number-wrapper">
+        <div class="rank-number">#{{ currentUserRank }}</div>
+        <p class="rank-subtitle">no ranking geral de acertos</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="leaderboard-section">
+    <h2 class="leaderboard-title">Ranking de Colaboradores</h2>
+
+    <nav class="sort-tabs">
+      <button 
+        class="btn sort-tab-btn" 
+        [class.active]="activeSortKey === 'accuracyPercent'"
+        (click)="sortLeaderboard('accuracyPercent')">
+        % Acertos
+      </button>
+      <button 
+        class="btn sort-tab-btn" 
+        [class.active]="activeSortKey === 'quizzesDone'"
+        (click)="sortLeaderboard('quizzesDone')">
+        Quizzes Feitos
+      </button>
+      <button 
+        class="btn sort-tab-btn" 
+        [class.active]="activeSortKey === 'coursesDone'"
+        (click)="sortLeaderboard('coursesDone')">
+        Cursos Completos
+      </button>
+    </nav>
+
+    <div class="leaderboard-list">
+      
+      <header class="rank-item rank-header">
+        <span class="header-pos">Pos.</span>
+        <span class="header-user">Colaborador</span>
+        <span class="header-stat">% Acertos</span>
+        <span class="header-stat">Quizzes</span>
+        <span class="header-stat">Cursos</span>
+      </header>
+
+      <article 
+        class="rank-item" 
+        *ngFor="let user of displayLeaderboard; let i = index"
+        [class.current-user]="user.id === currentUser.id"
+        @fadeSlide>
+        
+        <div class="rank-position">
+          <span class="pos-number">{{ i + 1 }}</span>
+          <span class="medal">{{ getMedal(i) }}</span>
+        </div>
+        
+        <div class="rank-user-info">
+          <div class="rank-user-avatar">{{ user.avatarInitial }}</div>
+          <div class="user-details">
+            <span class="user-name">{{ user.name }}</span>
+            <span class="user-role">{{ user.role }}</span>
+          </div>
+        </div>
+
+        <div class="rank-stats">
+          <span class="stat-value" [class.highlight]="activeSortKey === 'accuracyPercent'">
+            {{ user.accuracyPercent }}%
+          </span>
+          <span class="stat-value" [class.highlight]="activeSortKey === 'quizzesDone'">
+            {{ user.quizzesDone }}
+          </span>
+          <span class="stat-value" [class.highlight]="activeSortKey === 'coursesDone'">
+            {{ user.coursesDone }}
+          </span>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+</main>
