@@ -1,0 +1,65 @@
+<div class="background-video">
+  <video id="bg-video" autoplay muted loop playsinline preload="auto">
+    <source src="assets/Auravideo.mp4" type="video/mp4">
+    <!-- Opcional: adicione WebM para mais compatibilidade -->
+    <!-- <source src="assets/Auravideo.webm" type="video/webm"> -->
+    Seu navegador não suporta vídeos HTML5.
+  </video>
+</div>
+
+<div class="login-container">
+  <!-- Header -->
+  <header class="header">
+    <div class="logo">
+      Grow<span class="highlight">Map</span>
+    </div>
+
+    <nav class="nav-menu">
+      <a routerLink="/home">HOME</a>
+      <a routerLink="/sobre">SOBRE</a>
+      <a routerLink="/planos">ORÇAMENTO</a>
+      <a routerLink="/parceiros">PARCEIROS</a>
+      <a routerLink="/feedback">FEEDBACK</a>
+      
+      <a routerLink="/login" class="active" routerLinkActive="active">LOGIN</a>
+      <button class="btn-register" routerLink="/cadastro">Registrar-se</button>
+    </nav>
+  </header>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <div class="login-form">
+      <h2>Login</h2>
+
+      <form>
+        <div class="input-group">
+          <input type="email" placeholder="E-mail" />
+          <span class="icon">✉️</span>
+        </div>
+
+        <div class="input-group">
+          <input type="password" placeholder="Senha" />
+          <span class="icon">🔒</span>
+        </div>
+
+        <div class="options">
+          <label>
+            <input type="checkbox" /> Lembrar de mim
+          </label>
+          <a routerLink="/recuperar-senha" class="forgot-password">Esqueceu a Senha?</a>
+        </div>
+
+        <button type="button" class="btn-login">Entrar</button>
+      </form>
+
+      <div class="signup-link">
+        Novo por aqui? <a routerLink="/cadastro">Crie uma conta</a>
+      </div>
+    </div>
+
+    <div class="welcome-section">
+      <h1>Seja Bem Vindo!</h1>
+      <p>Você pode fazer login para acessar com sua conta existente.</p>
+    </div>
+  </main>
+</div>

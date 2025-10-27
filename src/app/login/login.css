@@ -1,0 +1,275 @@
+/* Reset básico */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden; /* ✅ remove rolagem lateral */
+}
+
+.background-video {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: -1;
+  background-color: black; /* fundo de segurança */
+}
+
+.background-video video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(0.85);
+  opacity: 0.9;
+  transition: opacity 1s ease-in-out;
+  pointer-events: none; /* impede o vídeo de interferir em cliques */
+}
+
+
+
+.login-container {
+  width: 100%;
+  max-width: 100%;
+  position: relative;
+  z-index: 1;
+  padding: 20px 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  overflow: hidden;
+}
+
+.login-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+ 
+  height: 100%;
+  background: linear-gradient(120deg, rgba(142,45,226,0.4), rgba(0,198,255,0.2));
+  
+  opacity: 0.25;
+  z-index: -1;
+}
+
+/* Header */
+.header {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 20px 5%;
+  max-width: 100%;
+}
+
+.logo {
+  font-size: 24px;
+  font-weight: bold;
+  letter-spacing: 0.2px;
+  color: #6a44d3; /* cor do "Grow" */
+  margin-right: -100px; /* Espaço entre logo e nav */
+}
+
+.logo .highlight {
+  color: #3ff9ff; /* cor do "Map" */
+}
+
+.nav-menu {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  margin-left: 200px; /* Você já tem isso */
+}
+
+.nav-menu a {
+  color: white;
+  text-decoration: none;
+  font-size: 14px;
+  transition: color 0.3s;
+}
+
+.nav-menu a:hover,
+.nav-menu a.active {
+  color: #00c6ff;
+}
+
+.btn-register {
+  background: linear-gradient(90deg, #00c6ff, #b404fa);
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: transform 0.2s;
+}
+
+.btn-register:hover {
+  transform: scale(1.05);
+}
+
+.main-content {
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-start; 
+  margin-top: 240px; 
+  gap: 0%; 
+  flex-wrap: wrap;
+}
+
+.login-form h2 {
+  margin-bottom: 20px;
+  font-size: 35px;
+  color: #ffffff;
+ 
+}
+
+.input-group {
+  position: relative;
+  margin-bottom: 20px;
+ 
+}
+
+.input-group input {
+  width: 130%; 
+  padding: 12px 15px;
+  border: none;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  font-size: 16px;
+}
+
+.input-group input:focus {
+  outline: none;
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.input-group .icon {
+  position: absolute;
+  right: -50px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #aaa;
+  font-size: 18px;
+
+}
+
+.options {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 20px 0;
+  font-size: 14px;
+}
+
+.options label {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  color: #ffffff;
+}
+
+.options input[type="checkbox"] {
+  accent-color: #00c6ff;
+}
+
+.forgot-password {
+  position: relative;
+  left: 68px;
+  color: #00c6ff;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.forgot-password:hover {
+  text-decoration: underline;
+}
+
+.btn-login {
+  position: relative;
+  left: 30px;
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 25px;
+  background: linear-gradient(90deg, #00c6ff, #8e2de2);
+  color: white;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.3s;
+}
+
+.btn-login:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 198, 255, 0.4);
+}
+
+.signup-link {
+  position: relative;
+  left: 30px;
+  text-align: center;
+  margin-top: 20px;
+  font-size: 14px;
+  color: #ffffff;
+}
+
+.signup-link a {
+  color: #00c6ff;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.signup-link a:hover {
+  text-decoration: underline;
+}
+
+/* Seção de Boas-Vindas */
+.welcome-section {
+  max-width: 400px;
+  margin-right: 00px;
+}
+
+.welcome-section h1 {
+  font-size: 36px;
+  margin-bottom: 25px;
+  color: #ffffff;
+  
+}
+
+.welcome-section p {
+  font-size: 16px;
+  line-height: 1.6;
+  color: #cccccc;
+}
+
+/* Responsivo */
+@media (max-width: 768px) {
+  .main-content {
+    flex-direction: column;
+    padding: 5%;
+  }
+
+  .login-form {
+    width: 100%;
+    max-width: 400px;
+   
+  }
+}
+.input-group .icon {
+  transform: translateY(-50%);
+  color: #ffffff; /* Cor branca */
+  font-size: 18px;
+  opacity: 0.7; /* Deixa um pouco mais claro */
+  filter: brightness(100%) contrast(100%) saturate(0%); /* Força em branco */
+}

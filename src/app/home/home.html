@@ -1,0 +1,159 @@
+<header class="navbar">
+  <div class="nav-left">
+    <div class="logo"></div>
+    <span class="brand">GrowMap</span>
+  </div>
+
+  <nav class="nav-center" id="main-nav">
+    <a class="nav-link" routerLink="/home">Home</a>
+    <a class="nav-link" routerLink="/sobre">Sobre</a>
+    <a class="nav-link" routerLink="/planos">Orçamento</a>
+    <a class="nav-link" routerLink="/parceiros">Parceiros</a>
+    <a class="nav-link" routerLink="/feedback">Feedback</a>
+  </nav>
+
+  <div class="nav-right">
+    <button class="login-btn" routerLink="/login">Login</button>
+    <button id="hamburger" class="hamburger" aria-label="Abrir menu" (click)="toggleMenu()">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<main>
+  <section class="hero" id="home">
+    <div class="hero-inner">
+      <h1 class="hero-title"><span class="highlight">Grow</span>Map</h1>
+      <p class="subtitle">
+        SaaS de análises e desenvolvimento de habilidades corporativas para o crescimento sustentável das empresas.
+      </p>
+      <div class="hero-cta">
+        <button class="btn-primary" routerLink="/planos">Conheça os Planos</button>
+        <button class="btn-ghost" routerLink="/sobre">Fale com a equipe</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- SOBRE -->
+  <section class="card-section fade-in" id="about">
+    <div class="container about-container">
+      <h2>Sobre Nós</h2>
+      <p>
+        Somos um grupo de alunos da faculdade FACENS, do curso de Análise e Desenvolvimento de Sistemas (ADS) em Sorocaba. Desenvolvemos o GrowMap como um software acadêmico que auxilia empresas a analisarem e desenvolverem habilidades corporativas.
+      </p>
+      <p>
+        Nossa plataforma oferece relatórios detalhados, insights estratégicos e ferramentas de capacitação, ajudando equipes a evoluírem continuamente e alcançarem resultados mais eficientes.
+      </p>
+    </div>
+  </section>
+
+  <!-- ROADMAP -->
+  <section class="card-section roadmap-section fade-in" id="roadmap">
+    <div class="container">
+      <h2>Como funciona o GrowMap?</h2>
+      <div class="roadmap-card">
+        <div class="roadmap-step" *ngFor="let step of steps">
+          <div class="step-icon">{{ step.icon }}</div>
+          <div class="step-content">
+            <h3>{{ step.title }}</h3>
+            <p>{{ step.text }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PARCEIROS -->
+  <section class="card-section partners-section fade-in" id="partners-section">
+    <div class="container">
+      <h2>Quer ser nosso parceiro?</h2>
+      <p class="partners-subtitle">
+        Colabore com a GrowMap e potencialize seus cursos, alcance novas empresas e participe do desenvolvimento de habilidades corporativas.
+      </p>
+
+      <div class="partners-list">
+        <div class="partner-item" *ngFor="let partner of partners">
+          <div class="partner-icon">{{ partner.icon }}</div>
+          <div class="partner-info">
+            <h3>{{ partner.title }}</h3>
+            <p>{{ partner.text }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PLANOS -->
+  <section class="card-section" id="plans">
+    <div class="container">
+      <h2>Planos</h2>
+      <p class="partners-subtitle">
+        Escolha o plano ideal para seu negócio e potencialize suas habilidades corporativas, do básico ao avançado.
+      </p>
+
+      <div class="plan-cards">
+        <article class="card plan-card" id="plan-free">
+          <h3>Grátis</h3>
+          <p class="price">R$0<span class="price-cents">,00</span></p>
+          <ul>
+            <li>Acesso básico</li>
+            <li>Relatórios limitados</li>
+            <li>1 usuário</li>
+          </ul>
+          <button class="btn-primary" routerLink="/cadastro">Cadastrar</button>
+        </article>
+
+        <article class="card plan-card featured" id="plan-business">
+          <h3>Empresas</h3>
+          <p>Plano personalizado</p>
+          <p>Ideal para organizações com múltiplos usuários e setores.</p>
+          <button class="btn-primary" routerLink="/planos">Solicite seu orçamento</button>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEEDBACK -->
+  <section class="card-section contact-section fade-in">
+    <h2>Fale Conosco</h2>
+    <form class="contact-form">
+      <div class="row">
+        <input type="text" placeholder="Nome" />
+        <input type="email" placeholder="Email" />
+      </div>
+      <textarea placeholder="Mensagem"></textarea>
+      <button class="btn-primary"><span>Enviar</span></button>
+    </form>
+  </section>
+</main>
+
+<footer>
+  <div class="container footer-inner">
+    <div class="footer-column">
+      <h4>GrowMap</h4>
+      <p>Facens — Faculdade de Engenharia de Sorocaba</p>
+      <p>Curso — Análise e Desenvolvimento de Sistemas</p>
+      <p>Orientador: Eliney Sabino</p>
+    </div>
+
+    <div class="footer-column">
+      <h4>Empresa</h4>
+      <p>SaaS de análises e desenvolvimento de habilidades corporativas.</p>
+      <p>Localização: Sorocaba, SP — Brasil</p>
+    </div>
+
+    <div class="footer-column">
+      <h4>Redes Sociais</h4>
+      <div class="social-links">
+        <a href="#" aria-label="Instagram">📸</a>
+        <a href="#" aria-label="LinkedIn">💼</a>
+        <a href="#" aria-label="GitHub">🐱</a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">© 2025 GrowMap — Todos os direitos reservados</div>
+</footer>
+
+<a href="https://wa.me/5515988315749" class="whatsapp-btn" target="_blank">
+  <img src="assets/zap.png" alt="WhatsApp" />
+</a>
