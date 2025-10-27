@@ -1,0 +1,212 @@
+<nav class="navbar">
+    <div class="logo">
+      <div class="user-avatar">
+        <svg width="40" height="40" viewBox="0 0 40 40">
+          <circle cx="20" cy="20" r="20" fill="url(#avatarGradient)" />
+          <text x="20" y="26" font-size="20" fill="#fff" text-anchor="middle" font-weight="bold">
+            {{ userName.charAt(0) }}
+          </text>
+          <defs>
+            <linearGradient id="avatarGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" style="stop-color:#2DF8E0" />
+              <stop offset="100%" style="stop-color:#4E3DE0" />
+            </linearGradient>
+          </defs>
+        </svg>
+      </div>
+      <div class="user-info">
+        <div class="user-name">{{ userName }}</div>
+        <div class="user-role">{{ userRole }}</div>
+      </div>
+    </div>
+  
+    <div class="nav-center" [class.open]="mobileMenuOpen">
+      <a [routerLink]="['/dashboard']" class="nav-link">Dashboard</a>
+      <a [routerLink]="['/cursos']" class="nav-link">Cursos</a>
+      <a [routerLink]="['/contatos']" class="nav-link">Suporte</a>
+    </div>
+  
+    <div class="nav-right">
+      <button class="theme-toggle" (click)="toggleTheme()" aria-label="Toggle theme">
+        <span class="theme-icon">{{ isDarkMode ? '☀️' : '🌙' }}</span>
+      </button>
+      <button class="logout-btn" aria-label="Logout">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+          <polyline points="16 17 21 12 16 7" />
+          <line x1="21" y1="12" x2="9" y2="12" />
+        </svg>
+      </button>
+      <button class="hamburger" [class.active]="mobileMenuOpen" (click)="toggleMobileMenu()">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </nav>
+  
+  <main class="dashboard-main">
+    <div class="container">
+      
+      <header class="dashboard-header">
+        <h1 class="dashboard-title">Dashboard</h1>
+      </header>
+  
+      <section class="metrics-section">
+        <article class="metrics-card">
+          
+          <div class="metric-item score-chart">
+            <h3 class="metric-title">Nota geral</h3>
+            <div class="donut-chart-wrapper">
+              <svg class="donut-chart" viewBox="0 0 200 200">
+                <circle
+                  class="donut-bg"
+                  cx="100"
+                  cy="100"
+                  r="80"
+                  fill="none"
+                  stroke="var(--card-bg)"
+                  stroke-width="20"
+                />
+                <circle
+                  class="donut-progress"
+                  cx="100"
+                  cy="100"
+                  r="80"
+                  fill="none"
+                  stroke="url(#donutGradient)"
+                  stroke-width="20"
+                  stroke-linecap="round"
+                  [attr.stroke-dasharray]="502.4"
+                  [attr.stroke-dashoffset]="502.4 - (502.4 * overallScore) / 100"
+                  transform="rotate(-90 100 100)"
+                />
+                <defs>
+                  <linearGradient id="donutGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" style="stop-color:#2DF8E0" />
+                    <stop offset="100%" style="stop-color:#4E3DE0" />
+                  </linearGradient>
+                </defs>
+              </svg>
+              <div class="donut-center">
+                <div class="score-label">Nota</div>
+                <div class="score-value">{{ overallScore }}%</div>
+              </div>
+            </div>
+            <div class="chart-actions">
+              <button class="action-btn" aria-label="Share">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="18" cy="5" r="3" />
+                  <circle cx="6" cy="12" r="3" />
+                  <circle cx="18" cy="19" r="3" />
+                  <line x1="8.59" y1="13.51" x2="15.42" y2="17.49" />
+                  <line x1="15.41" y1="6.51" x2="8.59" y2="10.49" />
+                </svg>
+              </button>
+              <button class="action-btn" aria-label="Download">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                  <polyline points="7 10 12 15 17 10" />
+                  <line x1="12" y1="15" x2="12" y2="3" />
+                </svg>
+              </button>
+            </div>
+          </div>
+  
+          <div class="metric-item roadmaps-progress">
+            <h3 class="metric-title">RoadMaps</h3>
+            <div class="progress-list">
+              <div class="progress-item" *ngFor="let rm of roadMaps">
+                <div class="progress-header">
+                  <span class="progress-name">{{ rm.name }}</span>
+                  <span class="progress-percentage">{{ rm.progress }}%</span>
+                </div>
+                <div class="progress-bar-container">
+                  <div 
+                    class="progress-bar-fill" 
+                    [style.width.%]="rm.progress"
+                    [style.background]="rm.color"
+                  ></div>
+                </div>
+              </div>
+            </div>
+          </div>
+  
+          <div class="metric-item frequency-chart">
+            <div class="chart-header">
+              <h3 class="metric-title">Frequencia de Tarefas</h3>
+              <span class="chart-year">2025</span>
+            </div>
+            <div class="chart-month">Setembro</div>
+            <div class="area-chart-wrapper">
+              <svg class="area-chart" viewBox="0 0 100 60" preserveAspectRatio="none">
+                <defs>
+                  <linearGradient id="areaGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" style="stop-color:#4E3DE0;stop-opacity:0.8" />
+                    <stop offset="100%" style="stop-color:#4E3DE0;stop-opacity:0.1" />
+                  </linearGradient>
+                </defs>
+                
+                <path
+                  class="area-path"
+                  [attr.d]="getAreaChartPath()"
+                  fill="url(#areaGradient)"
+                />
+                
+                <path
+                  class="line-path"
+                  d="M 0,48 L 16.67,36 L 33.33,43 L 50,18 L 66.67,25 L 83.33,5 L 100,10"
+                  fill="none"
+                  stroke="#4E3DE0"
+                  stroke-width="0.5"
+                />
+                
+                <circle cx="0" cy="48" r="1" fill="#4E3DE0" class="data-point" />
+                <circle cx="16.67" cy="36" r="1" fill="#4E3DE0" class="data-point" />
+                <circle cx="33.33" cy="43" r="1" fill="#4E3DE0" class="data-point" />
+                <circle cx="50" cy="18" r="1" fill="#4E3DE0" class="data-point" />
+                <circle cx="66.67" cy="25" r="1" fill="#4E3DE0" class="data-point" />
+                <circle cx="83.33" cy="5" r="1" fill="#4E3DE0" class="data-point" />
+                <circle cx="100" cy="10" r="1" fill="#4E3DE0" class="data-point" />
+              </svg>
+            </div>
+          </div>
+  
+        </article>
+      </section>
+  
+      <section class="navigation-grid">
+        <article 
+          class="nav-card" 
+          *ngFor="let card of navigationCards"
+          [routerLink]="card.route"
+          [style.border-color]="card.color"
+        >
+          <div class="nav-card-icon" [style.color]="card.color">{{ card.icon }}</div>
+          <h3 class="nav-card-title">{{ card.title }}</h3>
+        </article>
+      </section>
+  
+      <section class="courses-section">
+        <header class="section-header">
+          <h2 class="section-title">Cursos</h2>
+          <p class="section-subtitle">do básico ao avançado!</p>
+        </header>
+  
+        <div class="courses-grid">
+          <article 
+            class="course-card" 
+            *ngFor="let course of courses"
+            (click)="onCourseClick(course)"
+          >
+            <div class="course-icon">{{ course.icon }}</div>
+            <div class="course-content">
+              <h3 class="course-title">{{ course.title }}</h3>
+              <p class="course-description">{{ course.description }}</p>
+            </div>
+          </article>
+        </div>
+      </section>
+  
+    </div>
+  </main>

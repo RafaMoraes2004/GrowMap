@@ -1,0 +1,416 @@
+/* ========================================================
+ * VARIÁVEIS DE TEMA (Idênticas)
+ * ======================================================== */
+ :host {
+    --bg: #071026;
+    --card-bg: #0f1724;
+    --text: #e6f0ff;
+    --muted: #9fb4d9;
+    --primary: #2DF8E0;
+    --primary-600: #4E3DE0;
+    --accent: #4E3DE0;
+    --nav-bg: rgba(10, 14, 22, 0.7);
+    --shadow: rgba(0, 0, 0, 0.6);
+    --glass: rgba(255, 255, 255, 0.03);
+    --transition: 300ms cubic-bezier(.22, .9, .36, 1);
+    --new-color: #f39c12; /* Amarelo/Laranja */
+    --popular-color: var(--accent);
+  
+    display: block;
+    min-height: 100vh;
+    font-family: 'Poppins', system-ui, -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    transition: background-color var(--transition), color var(--transition);
+  }
+  :host([data-theme="light"]) {
+    --bg: #F0F2F5;
+    --card-bg: #FFFFFF;
+    --text: #071026;
+    --muted: #6B7280;
+    --nav-bg: rgba(255, 255, 255, 0.7);
+    --shadow: rgba(0, 0, 0, 0.1);
+    --glass: rgba(0, 0, 0, 0.05);
+    --new-color: #e67e22;
+  }
+  
+  /* ========================================================
+   * BOTÕES GLOBAIS (Idênticos)
+   * ======================================================== */
+  .btn {
+    background: var(--card-bg);
+    color: var(--text);
+    border: 1px solid var(--glass);
+    padding: 10px 16px;
+    border-radius: 10px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all var(--transition);
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none; /* Para links <a> */
+  }
+  .btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px var(--shadow);
+    border-color: var(--primary);
+    color: var(--primary);
+  }
+  .btn .icon { font-size: 1.2em; }
+  .btn.btn-primary {
+    background: var(--primary);
+    border-color: var(--primary);
+    color: var(--bg);
+  }
+  .btn.btn-primary:hover {
+    filter: brightness(1.1);
+    box-shadow: 0 5px 20px -5px var(--primary);
+  }
+  /* Botão secundário (para "Ver em Meus Cursos") */
+  .btn.btn-secondary {
+    background: var(--glass);
+    border-color: var(--primary);
+    color: var(--primary);
+  }
+  .btn.btn-secondary:hover {
+    background: rgba(45, 248, 224, 0.1);
+    color: var(--text);
+  }
+  
+  
+  /* ========================================================
+   * BOTÃO DE VOLTAR GLOBAL (Idêntico)
+   * ======================================================== */
+  .global-back-container {
+    max-width: 1200px;
+    margin: 0 auto 20px auto;
+    padding: 0 24px;
+  }
+  .global-back-button {
+    text-decoration: none;
+    background: var(--glass);
+    color: var(--muted);
+    font-weight: 600;
+  }
+  .global-back-button:hover {
+    background: var(--card-bg);
+    color: var(--primary);
+  }
+  
+  
+  /* ========================================================
+   * ESTILOS DA NAVBAR (Idênticos)
+   * ======================================================== */
+  .navbar {
+    position: sticky; top: 0; z-index: 60; display: flex; align-items: center;
+    justify-content: space-between; padding: 14px 24px;
+    background: linear-gradient(180deg, var(--nav-bg), rgba(0, 0, 0, 0));
+    backdrop-filter: blur(12px); box-shadow: 0 6px 18px var(--shadow);
+    border-bottom: 1px solid var(--glass);
+    transition: background var(--transition), box-shadow var(--transition);
+  }
+  /* ... (todos os outros estilos da navbar: .logo, .nav-center, .nav-right, etc.) ... */
+  .navbar .logo { display: flex; align-items: center; gap: 12px; }
+  .navbar .user-info { display: flex; flex-direction: column; gap: 2px; }
+  .navbar .user-name {
+    font-weight: 700; font-size: 16px;
+    background: linear-gradient(90deg, var(--primary), var(--accent));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  .navbar .user-role { font-size: 12px; color: var(--muted); }
+  .navbar .nav-center { display: flex; gap: 20px; align-items: center; }
+  .navbar .nav-link {
+    color: var(--muted); text-decoration: none; font-weight: 600;
+    font-size: 14px; padding: 8px 12px; border-radius: 8px;
+    transition: all var(--transition); position: relative;
+  }
+  .navbar .nav-link:hover { color: var(--primary); transform: translateY(-2px); }
+  .navbar .nav-right { display: flex; align-items: center; gap: 12px; }
+  .navbar .theme-toggle, .navbar .logout-btn {
+    background: var(--glass); border: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 10px; border-radius: 10px; color: var(--text);
+    cursor: pointer; transition: all var(--transition); display: flex;
+  }
+  .navbar .theme-toggle:hover, .navbar .logout-btn:hover {
+    background: rgba(45, 248, 224, 0.1); border-color: var(--primary);
+    transform: translateY(-2px);
+  }
+  
+  
+  /* ========================================================
+   * LAYOUT GERAL DA PÁGINA
+   * ======================================================== */
+  .page-wrapper {
+    padding-top: 20px;
+  }
+  .page-header {
+    margin-bottom: 24px;
+  }
+  .page-title {
+    font-size: 32px;
+    font-weight: 800;
+    color: var(--text);
+    margin: 0 0 8px 0;
+  }
+  .page-subtitle {
+    font-size: 18px;
+    color: var(--muted);
+    margin: 0;
+  }
+  
+  /* ========================================================
+   * VIEW 1: LISTA DE CURSOS (NOVO)
+   * ======================================================== */
+  .course-list-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px 40px 24px;
+  }
+  
+  /* --- Abas de Filtro --- */
+  .filter-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 24px;
+    border-bottom: 1px solid var(--glass);
+    padding-bottom: 24px;
+  }
+  .sort-tab-btn {
+    background: var(--glass);
+    color: var(--muted);
+    font-weight: 600;
+    border-color: var(--glass);
+  }
+  .sort-tab-btn:hover {
+    color: var(--text);
+    border-color: var(--muted);
+  }
+  .sort-tab-btn.active {
+    color: var(--bg);
+    background: var(--primary);
+    border-color: var(--primary);
+    box-shadow: 0 5px 20px -5px var(--primary);
+  }
+  
+  /* --- Grid de Cursos --- */
+  .course-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 24px;
+  }
+  
+  .course-card {
+    background: var(--card-bg);
+    border: 1px solid var(--glass);
+    border-radius: 16px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: all var(--transition);
+    display: flex;
+    flex-direction: column;
+    position: relative; /* Para os badges */
+  }
+  .course-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--primary);
+    box-shadow: 0 10px 30px var(--shadow);
+  }
+  .course-card.enrolled {
+    border-color: var(--accent);
+  }
+  
+  /* Badges */
+  .badge {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 700;
+    color: #fff;
+  }
+  .badge.new {
+    background: var(--new-color);
+  }
+  .badge.popular {
+    background: var(--popular-color);
+  }
+  .badge.enrolled {
+    background: var(--primary);
+    color: var(--bg);
+    left: 16px;
+    right: auto;
+  }
+  
+  .course-card-icon {
+    font-size: 40px;
+    padding: 24px;
+    background: var(--glass);
+    width: 90px;
+    height: 90px;
+    border-radius: 12px;
+    margin: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .course-card-content {
+    padding: 0 24px 24px 24px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1; 
+  }
+  .course-card-title {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--text);
+    margin: 0 0 8px 0;
+  }
+  .course-card-info {
+    display: flex;
+    gap: 8px;
+    font-size: 13px;
+    color: var(--muted);
+    font-weight: 500;
+    margin-bottom: 12px;
+  }
+  .course-card-subtitle {
+    font-size: 14px;
+    color: var(--muted);
+    margin: 0;
+    line-height: 1.6;
+    flex-grow: 1; /* Empurra o footer para baixo */
+  }
+  .course-card-footer {
+    margin-top: 20px;
+  }
+  
+  /* ========================================================
+   * VIEW 2: DETALHES DO CURSO (NOVO)
+   * ======================================================== */
+  /* O padding-top é para compensar a barra de ação fixa */
+  .course-detail-container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 80px 24px 40px 24px;
+  }
+  
+  /* --- Barra de Ação Fixa --- */
+  .sticky-action-bar {
+    position: sticky;
+    top: 80px; /* Abaixo da navbar principal */
+    z-index: 50;
+    background: var(--card-bg);
+    border-bottom: 1px solid var(--glass);
+    box-shadow: 0 5px 20px var(--shadow);
+    padding: 16px 24px;
+    margin: -60px 0 32px 0; /* Puxa para cima no espaço do padding */
+  }
+  .sticky-bar-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .sticky-bar-info {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .sticky-bar-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--text);
+  }
+  .sticky-action-bar .back-button {
+    background: var(--glass);
+    padding: 8px 12px;
+  }
+  
+  /* --- Cabeçalho da Página de Detalhes --- */
+  .course-detail-header {
+    margin-bottom: 32px;
+  }
+  .course-detail-header .course-card-info {
+    font-size: 16px;
+    margin-top: 16px;
+  }
+  .course-detail-header .badge.small {
+    font-size: 13px;
+    padding: 2px 8px;
+    position: static; /* Remove posicionamento absoluto */
+    margin-left: 8px;
+  }
+  
+  /* --- Acordeão de Módulos (Estilo de MeusCursos) --- */
+  .modules-title {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 20px;
+  }
+  .module-accordion {
+    background: var(--card-bg);
+    border: 1px solid var(--glass);
+    border-radius: 12px;
+    margin-bottom: 16px;
+  }
+  .module-header { /* <summary> */
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 20px;
+    cursor: pointer;
+    list-style: none; 
+  }
+  .module-header::-webkit-details-marker { display: none; }
+  .module-header-text { flex: 1; }
+  .module-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text);
+    margin: 0 0 4px 0;
+  }
+  .module-subtitle {
+    font-size: 14px;
+    color: var(--muted);
+    margin: 0;
+  }
+  
+  /* --- Lista de Aulas (Estilo de Catálogo) --- */
+  .module-content {
+    padding: 0 24px 24px 24px;
+    border-top: 1px solid var(--glass);
+    animation: fadeIn 0.3s ease-out;
+  }
+  .lesson-list {
+    list-style: none;
+    padding: 0;
+    margin: 20px 0 0 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .lesson-item-detail {
+    display: flex;
+    align-items: center;
+    background: var(--glass);
+    padding: 12px 16px;
+    border-radius: 8px;
+  }
+  .lesson-icon {
+    margin-right: 12px;
+  }
+  .lesson-title {
+    flex: 1;
+    color: var(--text);
+    font-weight: 500;
+  }
+  .lesson-duration {
+    font-size: 14px;
+    color: var(--muted);
+  }

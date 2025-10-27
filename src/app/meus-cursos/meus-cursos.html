@@ -1,0 +1,167 @@
+<nav class="navbar">
+    <div class="logo">
+      <div class="user-avatar">
+        <svg width="40" height="40" viewBox="0 0 40 40">
+          <circle cx="20" cy="20" r="20" fill="url(#avatarGradient)" />
+          <text x="20" y="26" font-size="20" fill="#fff" text-anchor="middle" font-weight="bold">
+            {{ userName.charAt(0) }}
+          </text>
+          <defs>
+            <linearGradient id="avatarGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" style="stop-color:#2DF8E0" />
+              <stop offset="100%" style="stop-color:#4E3DE0" />
+            </linearGradient>
+          </defs>
+        </svg>
+      </div>
+      <div class="user-info">
+        <div class="user-name">{{ userName }}</div>
+        <div class="user-role">{{ userRole }}</div>
+      </div>
+    </div>
+    <div class="nav-center" [class.open]="mobileMenuOpen">
+        <a [routerLink]="['/dashboard']" class="nav-link">Dashboard</a>
+        <a [routerLink]="['/cursos']" class="nav-link">Cursos</a>
+        <a [routerLink]="['/contatos']" class="nav-link">Suporte</a>
+    </div>
+    <div class="nav-right">
+      <button class="theme-toggle" (click)="toggleTheme()" aria-label="Toggle theme">
+        <span class="theme-icon">{{ isDarkMode ? '☀️' : '🌙' }}</span>
+      </button>
+      <button class="logout-btn" aria-label="Logout">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+          <polyline points="16 17 21 12 16 7" />
+          <line x1="21" y1="12" x2="9" y2="12" />
+        </svg>
+      </button>
+      <button class="hamburger" [class.active]="mobileMenuOpen" (click)="toggleMobileMenu()">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+</nav>
+
+<div class="page-wrapper" [ngSwitch]="currentView">
+
+  <div class="global-back-container">
+    <a [routerLink]="['/dashboard']" class="btn global-back-button">
+      <span class="icon">‹</span> Voltar para o Dashboard
+    </a>
+  </div>
+
+  <main *ngSwitchCase="'list'" class="course-list-container" @fadeSlide>
+    <header class="page-header">
+      <h1 class="page-title">Meus Cursos</h1>
+    </header>
+
+    <div class="course-grid">
+      <article 
+        class="course-card" 
+        *ngFor="let course of allCourses"
+        (click)="selectCourse(course)">
+        
+        <div class="course-card-icon">{{ course.icon }}</div>
+        
+        <div class="course-card-content">
+          <h3 class="course-card-title">{{ course.name }}</h3>
+          <p class="course-card-subtitle">
+            {{ course.phases.length }} Módulos
+          </p>
+
+          <div class="progress-bar-container">
+            <div 
+              class="progress-bar-fill" 
+              [style.width.%]="getCourseProgress(course)"
+            ></div>
+          </div>
+          <span class="progress-text">{{ getCourseProgress(course) | number:'1.0-0' }}% Completo</span>
+        </div>
+      </article>
+    </div>
+  </main>
+
+  <main *ngSwitchCase="'detail'" class="course-detail-container" @fadeSlide>
+    <header class="course-detail-header">
+      
+      <button class="btn back-button" (click)="goBackToList()">
+        <span class="icon">‹</span> Voltar para Meus Cursos
+      </button>
+      
+      <h1 class="page-title">{{ selectedCourse?.name }}</h1>
+      <div class="progress-bar-container course-progress">
+        <div 
+          class="progress-bar-fill" 
+          [style.width.%]="getCourseProgress(selectedCourse!)"
+        ></div>
+      </div>
+      <span class="progress-text">{{ getCourseProgress(selectedCourse!) | number:'1.0-0' }}% do curso completo</span>
+    
+    </header>
+
+    <section class="modules-accordion-container">
+      <h2 class="modules-title">Conteúdo do Curso</h2>
+
+      <details 
+        class="module-accordion" 
+        *ngFor="let module of selectedCourse?.phases"
+        [open]="module.status === PhaseStatus.InProgress">
+        
+        <summary 
+          class="module-header"
+          [class.locked]="module.status === PhaseStatus.Locked"
+          (click)="onModuleClick($event, module)">
+          
+          <span class="module-status-icon">{{ getIconForStatus(module.status) }}</span>
+          <div class="module-header-text">
+            <h3 class="module-title">{{ module.title }}</h3>
+            <span class="module-subtitle">{{ module.description }}</span>
+          </div>
+          <span class="module-progress-text">{{ getModuleProgress(module) | number:'1.0-0' }}%</span>
+        </summary>
+
+        <div class="module-content">
+          <ul class="lesson-list">
+            <li *ngFor="let lesson of module.lessons" class="lesson-item">
+              <input 
+                type="checkbox" 
+                class="lesson-checkbox"
+                id="lesson-{{lesson.id}}" 
+                [checked]="lesson.isCompleted"
+                (change)="toggleLessonComplete(lesson, module)">
+              
+              <label [for]="'lesson-' + lesson.id" class="lesson-label">
+                <span class_ ="lesson-icon">{{ lesson.type === 'video' ? '▶️' : '📄' }}</span>
+                <span class="lesson-title">{{ lesson.title }}</span>
+                <a [href]="lesson.url" class="lesson-link" target="_blank" (click)="$event.stopPropagation()">
+                  Ver Conteúdo
+                </a>
+              </label>
+            </li>
+          </ul>
+
+          <div class="module-quiz-section">
+            <h4 class="quiz-title">Quiz: {{ module.title }}</h4>
+            
+            <div *ngIf="!allLessonsCompleted(module)" class="quiz-status-locked">
+              <span class="icon">🔒</span> Complete todas as aulas para liberar o quiz.
+            </div>
+            
+            <button 
+              *ngIf="allLessonsCompleted(module) && !module.isQuizCompleted" 
+              class="btn btn-primary"
+              (click)="completeQuiz(module)">
+              <span class="icon">✔️</span> Fazer Quiz (Simulação)
+            </button>
+
+            <div *ngIf="module.isQuizCompleted" class="quiz-status-completed">
+              <span class="icon">🎉</span> Quiz Concluído!
+            </div>
+          </div>
+        </div>
+      </details>
+    </section>
+  </main>
+
+</div>
