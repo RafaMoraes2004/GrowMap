@@ -30,8 +30,8 @@ export class ControleComponent implements OnInit {
   }
   isDarkMode = true;
   mobileMenuOpen = false;
-  userName = 'Kauan Davi'; // Placeholder, ajuste se necessário
-  userRole = 'Analista TI'; // Placeholder, ajuste se necessário
+  userName = 'Rafael'; // Placeholder, ajuste se necessário
+  userRole = 'Gestor TI'; // Placeholder, ajuste se necessário
 
   toggleTheme(): void { this.isDarkMode = !this.isDarkMode; }
   toggleMobileMenu(): void { this.mobileMenuOpen = !this.mobileMenuOpen; }
