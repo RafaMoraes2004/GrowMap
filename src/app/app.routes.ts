@@ -14,6 +14,8 @@ import { MeusCursosComponent } from './meus-cursos/meus-cursos';
 import { RankComponent } from './rank/rank';
 import { QuizzesComponent } from './quizzes/quizzes';
 import { CursosComponent } from './cursos/cursos';
+import { ControleComponent } from './AdminFuncoes/controle/controle';
+import { UsuariosComponent } from './AdminFuncoes/usuarios/usuarios';
 
 
 export const routes: Routes = [
@@ -31,6 +33,8 @@ export const routes: Routes = [
 {path: 'meus', component: MeusCursosComponent},
 {path: 'rank', component: RankComponent},
 {path: 'quizzes', component: QuizzesComponent},
-{path: 'cursos', component: CursosComponent}
+{path: 'cursos', component: CursosComponent},
+{path: 'controle', component: ControleComponent},
+{path: 'usuarios', component: UsuariosComponent}
 ];
 

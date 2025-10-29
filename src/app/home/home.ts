@@ -1,14 +1,13 @@
-import { Component, HostListener, AfterViewInit, Inject } from '@angular/core';
+import { Component, HostListener, AfterViewInit, Inject, PLATFORM_ID } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { RouterLink } from '@angular/router';
-import { PLATFORM_ID } from '@angular/core';
 
 @Component({
   selector: 'app-home',
   standalone: true,
   imports: [CommonModule, RouterLink],
   templateUrl: './home.html',
-  styleUrl: './home.css'
+  styleUrls: ['./home.css']
 })
 export class Home implements AfterViewInit {
 
@@ -36,13 +35,11 @@ export class Home implements AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    // Executar somente no browser (evita ReferenceError em SSR)
     if (!this.isBrowser) return;
-    this.checkFade(); // ativa o fade após a view estar pronta (somente browser)
+    this.checkFade();
   }
 
   toggleMenu() {
-    // Só manipula DOM se estiver no browser
     if (!this.isBrowser) {
       this.menuOpen = !this.menuOpen;
       return;
