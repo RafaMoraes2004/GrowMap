@@ -1,0 +1,225 @@
+/* ========================================================
+ * VARIÁVEIS DE TEMA (Reutilizadas do projeto)
+ * ======================================================== */
+ :host {
+    --bg: #071026;
+    --card-bg: #0f1724;
+    --text: #e6f0ff;
+    --muted: #9fb4d9;
+    --primary: #2DF8E0;
+    --primary-600: #4E3DE0;
+    --accent: var(--primary-600);
+    --nav-bg: rgba(10, 14, 22, 0.7);
+    --shadow: rgba(0, 0, 0, 0.6);
+    --glass: rgba(255, 255, 255, 0.03);
+    --transition: 300ms cubic-bezier(.22, .9, .36, 1);
+    --dot-online: #2DF8E0;
+    --dot-busy: #F8E02D;
+    --dot-offline: #F82D50;
+  
+    display: block;
+    min-height: 100vh; /* Garante altura mínima */
+    font-family: 'Poppins', system-ui, -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    transition: background-color var(--transition), color var(--transition);
+  }
+  
+  :host([data-theme="light"]) {
+    --bg: #F0F2F5;
+    --card-bg: #FFFFFF;
+    --text: #071026;
+    --muted: #6B7280;
+    --nav-bg: rgba(255, 255, 255, 0.7);
+    --shadow: rgba(0, 0, 0, 0.1);
+    --glass: rgba(0, 0, 0, 0.05);
+    --dot-online: #10B981;
+    --dot-busy: #F59E0B;
+    --dot-offline: #EF4444;
+  }
+  
+  /* ========================================================
+   * ✨ NAVBAR STYLES (Copiado de dashboard-usuario.css)
+   * ======================================================== */
+  .navbar {
+    position: sticky; top: 0; z-index: 60; display: flex; align-items: center; justify-content: space-between; padding: 14px 24px; background: linear-gradient(180deg, var(--nav-bg), rgba(0, 0, 0, 0)); backdrop-filter: blur(12px); box-shadow: 0 6px 18px var(--shadow); border-bottom: 1px solid var(--glass); transition: background var(--transition), box-shadow var(--transition);
+  }
+  .navbar .logo { display: flex; align-items: center; gap: 12px; }
+  .navbar .user-avatar { cursor: pointer; transition: transform var(--transition); }
+  .navbar .user-avatar:hover { transform: scale(1.05); }
+  .navbar .user-info { display: flex; flex-direction: column; gap: 2px; }
+  .navbar .user-name { font-weight: 700; font-size: 16px; background: linear-gradient(90deg, var(--primary), var(--accent)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+  .navbar .user-role { font-size: 12px; color: var(--muted); }
+  .navbar .nav-center { display: flex; gap: 20px; align-items: center; }
+  .navbar .nav-link { color: var(--muted); text-decoration: none; font-weight: 600; font-size: 14px; padding: 8px 12px; border-radius: 8px; transition: all var(--transition); position: relative; }
+  .navbar .nav-link::after { content: ''; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%) scaleX(0); width: 80%; height: 2px; background: var(--primary); transition: transform var(--transition); }
+  .navbar .nav-link:hover { color: var(--primary); transform: translateY(-2px); }
+  .navbar .nav-link:hover::after { transform: translateX(-50%) scaleX(1); }
+  .navbar .nav-right { display: flex; align-items: center; gap: 12px; }
+  .navbar .theme-toggle, .navbar .logout-btn { background: var(--glass); border: 1px solid rgba(255, 255, 255, 0.05); padding: 10px; border-radius: 10px; color: var(--text); cursor: pointer; transition: all var(--transition); display: flex; align-items: center; justify-content: center; }
+  .navbar .theme-toggle:hover, .navbar .logout-btn:hover { background: rgba(45, 248, 224, 0.1); border-color: var(--primary); transform: translateY(-2px); }
+  .navbar .theme-icon { font-size: 18px; }
+  .navbar .logout-btn svg { display: block; }
+  .navbar .hamburger { display: none; background: transparent; border: none; padding: 10px; border-radius: 8px; cursor: pointer; }
+  .navbar .hamburger span { display: block; height: 3px; width: 24px; background: var(--text); margin: 5px 0; border-radius: 2px; transition: all 0.3s ease; }
+  .navbar .hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(8px, 8px); }
+  .navbar .hamburger.active span:nth-child(2) { opacity: 0; }
+  .navbar .hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(8px, -8px); }
+  /* --- Fim Navbar Styles --- */
+  
+  
+  /* ========================================================
+   * BOTÕES GLOBAIS (Mantido)
+   * ======================================================== */
+  .btn { background: var(--card-bg); color: var(--text); border: 1px solid var(--glass); padding: 10px 16px; border-radius: 10px; font-weight: 600; cursor: pointer; transition: all var(--transition); display: inline-flex; align-items: center; gap: 8px; }
+  .btn:hover { transform: translateY(-2px); box-shadow: 0 4px 15px var(--shadow); border-color: var(--primary); color: var(--primary); }
+  .btn.btn-outline { background: transparent; border-color: var(--glass); color: var(--muted); }
+  .btn.btn-outline:hover { background: var(--glass); border-color: var(--primary); color: var(--primary); }
+  
+  /* ========================================================
+   * 1. LAYOUT GERAL E HEADER (Mantido)
+   * ======================================================== */
+  .dashboard-wrapper { max-width: 1400px; margin: 0 auto; padding: 24px; }
+  .dashboard-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; }
+  .dashboard-title { font-size: 32px; font-weight: 800; color: var(--text); margin: 0; }
+  /* .header-icons removido pois estão na navbar */
+  
+  /* ========================================================
+   * 2. CARD DE MÉTRICAS GERAIS (Layout Mantido, Conteúdo Ajustado)
+   * ======================================================== */
+  .metrics-card { display: grid; grid-template-columns: 1fr 1.5fr 2fr; gap: 24px; background: var(--card-bg); border: 1px solid var(--glass); border-radius: 16px; padding: 24px; box-shadow: 0 10px 40px var(--shadow); margin-bottom: 32px; transition: background-color var(--transition), border-color var(--transition), box-shadow var(--transition); animation: fadeInUp 0.6s ease-out; }
+  .metric-block { display: flex; flex-direction: column; }
+  .metric-title { font-size: 16px; font-weight: 600; color: var(--muted); margin: 0 0 16px 0; text-transform: uppercase; letter-spacing: 0.5px; }
+  
+  /* --- ✨ Bloco 1: Nota Geral (ESTILOS DO SVG DONUT) --- */
+  .score-chart { align-items: center; } /* Centraliza conteúdo */
+  .donut-chart-wrapper { position: relative; width: 180px; height: 180px; /* Ajuste tamanho se necessário */ margin: 0 auto 16px; }
+  .donut-chart { width: 100%; height: 100%; filter: drop-shadow(0 4px 20px rgba(78, 61, 224, 0.4)); }
+  .donut-progress { animation: drawDonut 1.5s ease-out forwards; transition: stroke-dashoffset 0.5s ease; }
+  .donut-center { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; }
+  .score-label { font-size: 14px; color: var(--muted); margin-bottom: 4px; }
+  .score-value { font-size: 32px; font-weight: 800; background: linear-gradient(135deg, var(--primary), var(--accent)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+  .chart-actions { display: flex; gap: 12px; justify-content: center; margin-top: 16px; }
+  .action-btn { background: var(--glass); border: 1px solid transparent; padding: 10px; border-radius: 10px; color: var(--muted); cursor: pointer; transition: all var(--transition); display: flex; }
+  .action-btn:hover { color: var(--primary); border-color: var(--primary); transform: translateY(-2px); }
+  .action-btn svg { display: block; }
+  
+  /* --- Bloco 2: Colaboradores (Estilos Mantidos) --- */
+  .collab-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 16px; }
+  .collab-list li { padding: 12px; border-radius: 8px; border: 1px solid var(--glass); cursor: pointer; transition: all var(--transition); }
+  .collab-list li:hover, .collab-list li.active { background: var(--glass); border-color: var(--accent); transform: scale(1.02); }
+  .collab-info { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+  .collab-name { font-weight: 600; color: var(--text); }
+  .collab-role { font-size: 12px; color: var(--muted); }
+  .collab-progress { display: flex; align-items: center; gap: 8px; }
+  .progress-percent { font-size: 12px; font-weight: 600; color: var(--muted); }
+  .progress-bar-bg { flex: 1; height: 4px; background: var(--glass); border-radius: 2px; }
+  .progress-bar-fill { height: 100%; background: var(--primary); border-radius: 2px; box-shadow: 0 0 10px var(--primary); transition: width 0.5s ease-out; animation: fillBar 1.5s ease-out forwards; }
+  .collab-list li.active .progress-bar-fill { background: var(--accent); box-shadow: 0 0 10px var(--accent); }
+  
+  /* --- ✨ Bloco 3: Gráfico de Frequência (ESTILOS DO SVG AREA) --- */
+  .frequency-chart .chart-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+  .frequency-chart .chart-header.clickable { cursor: pointer; }
+  .frequency-chart .chart-header.clickable:hover .metric-title { color: var(--primary); }
+  .reset-view-hint { font-size: 12px; font-weight: 400; color: var(--muted); margin-left: 8px; opacity: 0.7; }
+  .frequency-chart .chart-year { font-size: 14px; font-weight: 600; color: var(--muted); }
+  .frequency-chart .chart-month { font-size: 12px; color: var(--muted); margin-bottom: 16px; }
+  .area-chart-wrapper { background: rgba(255, 255, 255, 0.02); border-radius: 12px; padding: 10px 0 0 0; /* Ajuste padding se necessário */ height: 180px; /* Ajuste altura */ position: relative; overflow: hidden; /* Esconde overflow do SVG */ }
+  .area-chart { width: 100%; height: 100%; display: block; }
+  .area-path { animation: fillArea 1.5s ease-out forwards; transition: d 0.4s ease-out; /* Anima a mudança de dados */ }
+  .line-path { stroke-dasharray: 200; stroke-dashoffset: 200; animation: drawLine 2s ease-out forwards; transition: d 0.4s ease-out; /* Anima a mudança de dados */ }
+  
+  /* --- Fim Estilos SVG --- */
+  
+  
+  /* ========================================================
+   * 3. SEÇÃO DE EQUIPES E PROJETOS (Estilos Mantidos)
+   * ======================================================== */
+  .main-content-grid { display: grid; grid-template-columns: 280px 1fr; gap: 24px; margin-bottom: 32px; }
+  .team-sidebar { background: var(--card-bg); border: 1px solid var(--glass); border-radius: 16px; padding: 20px; height: fit-content; }
+  .sidebar-title { font-size: 18px; font-weight: 700; margin: 0 0 16px 0; }
+  .search-bar-wrapper { position: relative; margin-bottom: 20px; }
+  .sidebar-search { width: 100%; background: var(--bg); border: 1px solid var(--glass); border-radius: 8px; padding: 10px 14px 10px 36px; color: var(--text); font-family: 'Poppins'; font-size: 14px; transition: all var(--transition); }
+  .sidebar-search:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 10px var(--accent); }
+  .search-icon { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: var(--muted); }
+  .team-group-title { font-size: 14px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; margin: 16px 0 8px 0; padding-bottom: 4px; border-bottom: 1px solid var(--glass); }
+  .team-member-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 10px; }
+  .team-member { display: flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 500; color: var(--text); }
+  .status-dot { width: 10px; height: 10px; border-radius: 50%; }
+  .status-dot.online { background: var(--dot-online); }
+  .status-dot.busy { background: var(--dot-busy); }
+  .status-dot.offline { background: var(--dot-offline); }
+  .projects-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+  .projects-title { font-size: 24px; font-weight: 700; margin: 0; }
+  .projects-title:not(:first-of-type) { margin-top: 32px; }
+  .main-search { margin-bottom: 0; width: 300px; }
+  .project-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+  .project-card { background: var(--card-bg); border: 1px solid var(--glass); border-radius: 12px; padding: 20px; transition: all var(--transition); }
+  .project-card:hover { transform: translateY(-5px); border-color: var(--primary); box-shadow: 0 8px 30px var(--shadow); }
+  .project-card-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 4px; }
+  .project-title { font-size: 20px; font-weight: 700; color: var(--text); margin: 0; }
+  .project-rating { font-size: 14px; color: var(--glass); }
+  .project-rating .star.filled { color: var(--dot-busy); }
+  .project-status { font-size: 12px; font-weight: 600; color: var(--dot-online); margin: 0 0 16px 0; }
+  .project-status.in-progress { color: var(--dot-busy); }
+  .project-collaborator { display: flex; align-items: center; gap: 12px; }
+  .collab-avatar-placeholder { width: 40px; height: 40px; border-radius: 50%; background: linear-gradient(135deg, var(--primary), var(--accent)); display: grid; place-items: center; font-weight: 700; font-size: 18px; color: var(--bg); }
+  .collab-details { display: flex; flex-direction: column; }
+  .collab-details .collab-name { font-size: 14px; font-weight: 600; }
+  .collab-details .collab-role { font-size: 12px; }
+  .pagination { display: flex; justify-content: center; align-items: center; gap: 6px; margin-top: 24px; }
+  .page-link, .page-ellipsis { font-size: 14px; font-weight: 600; color: var(--muted); text-decoration: none; padding: 8px 12px; border-radius: 8px; transition: all var(--transition); }
+  .page-link:hover { background: var(--glass); color: var(--primary); }
+  .page-link.active { background: var(--accent); color: #fff; box-shadow: 0 4px 15px -5px var(--accent); }
+  
+  /* ========================================================
+   * 4. SEÇÃO "CRIAR" (Estilos Mantidos)
+   * ======================================================== */
+  .creation-section { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 32px; }
+  .creation-card { display: flex; align-items: center; gap: 20px; background: var(--card-bg); border: 1px solid var(--glass); border-radius: 12px; padding: 24px; transition: all var(--transition); }
+  .creation-card:hover { transform: translateY(-5px); box-shadow: 0 8px 30px var(--shadow); border-color: var(--accent); }
+  .creation-icon { flex-shrink: 0; width: 64px; height: 64px; border-radius: 12px; display: grid; place-items: center; }
+  #icon-roadmap { background: rgba(248, 45, 80, 0.1); color: #F82D50; }
+  #icon-tarefa { background: rgba(78, 61, 224, 0.1); color: #4E3DE0; }
+  #icon-trilha { background: rgba(45, 248, 224, 0.1); color: #2DF8E0; }
+  .creation-info { flex-grow: 1; }
+  .creation-title { font-size: 18px; font-weight: 700; color: var(--text); margin: 0 0 8px 0; }
+  .creation-desc { font-size: 13px; color: var(--muted); margin: 0; line-height: 1.5; }
+  
+  /* ========================================================
+   * ✨ ANIMAÇÕES (Copiadas de dashboard-usuario.css)
+   * ======================================================== */
+  @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes drawDonut { from { stroke-dashoffset: 502.4; } /* to é definido inline pelo Angular */ }
+  @keyframes fillBar { from { width: 0; } /* to é definido inline */ }
+  @keyframes fillArea { from { opacity: 0; transform: scaleY(0); transform-origin: bottom; } to { opacity: 1; transform: scaleY(1); } }
+  @keyframes drawLine { to { stroke-dashoffset: 0; } }
+  /* --- Fim Animações --- */
+  
+  /* ========================================================
+   * RESPONSIVIDADE (Ajustes combinados)
+   * ======================================================== */
+  @media (max-width: 1200px) {
+    .metrics-card { grid-template-columns: 1fr; }
+    .main-content-grid { grid-template-columns: 1fr; }
+    .team-sidebar { height: auto; }
+  }
+  @media (max-width: 900px) {
+    /* Navbar Responsiva */
+    .navbar .nav-center { display: none; }
+    .navbar .nav-center.open { display: flex; flex-direction: column; position: absolute; top: 100%; left: 0; width: 100%; background: var(--nav-bg); backdrop-filter: blur(12px); padding: 20px; gap: 12px; border-top: 1px solid var(--glass); }
+    .navbar .nav-right .hamburger { display: inline-block; }
+    /* Outros ajustes */
+    .creation-section { grid-template-columns: 1fr; }
+    .projects-header { flex-direction: column; align-items: flex-start; gap: 16px; }
+    .main-search { width: 100%; }
+  }
+  @media (max-width: 600px) {
+    .dashboard-wrapper { padding: 16px; }
+    .dashboard-title { font-size: 24px; }
+    .projects-title { font-size: 20px; }
+    .pagination { flex-wrap: wrap; }
+    .creation-card { flex-direction: column; text-align: center; }
+    .metrics-card { padding: 20px; gap: 24px; }
+    .score-chart .donut-chart-wrapper { width: 160px; height: 160px; } /* Donut menor */
+  }
