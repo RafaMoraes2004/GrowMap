@@ -1,0 +1,244 @@
+<nav class="navbar">
+    <div class="logo">
+      <div class="user-avatar">
+        <svg width="40" height="40" viewBox="0 0 40 40">
+          <circle cx="20" cy="20" r="20" fill="url(#avatarGradient)" />
+          <text x="20" y="26" font-size="20" fill="#fff" text-anchor="middle" font-weight="bold">
+            {{ userName.charAt(0) }}
+          </text>
+          <defs>
+            <linearGradient id="avatarGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" style="stop-color:var(--primary)" />
+              <stop offset="100%" style="stop-color:var(--accent)" />
+            </linearGradient>
+          </defs>
+        </svg>
+      </div>
+      <div class="user-info">
+        <div class="user-name">{{ userName }}</div>
+        <div class="user-role">{{ userRole }}</div>
+      </div>
+    </div>
+  
+    <div class="nav-center" [class.open]="mobileMenuOpen">
+        <a [routerLink]="['/controle']" class="nav-link">Painel de Controle</a>
+        <a [routerLink]="['/usuarios']" class="nav-link active">Usuarios</a> <a [routerLink]="['/avaliacao']" class="nav-link">Avaliação</a>
+        <a [routerLink]="['/configuracoes']" class="nav-link">Configurações</a>
+    </div>
+  
+    <div class="nav-right">
+      <button class="theme-toggle" (click)="toggleTheme()" aria-label="Toggle theme">
+        <span class="theme-icon">{{ isDarkMode ? '☀️' : '🌙' }}</span>
+      </button>
+      <button class="logout-btn" aria-label="Logout">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+          <polyline points="16 17 21 12 16 7" />
+          <line x1="21" y1="12" x2="9" y2="12" />
+        </svg>
+      </button>
+      <button class="hamburger" [class.active]="mobileMenuOpen" (click)="toggleMobileMenu()">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </nav>
+  
+  <div class="usuarios-wrapper">
+  
+    <div class="container">
+  
+      <ng-container *ngIf="!selectedUser; else detailView">
+  
+        <header class="list-header">
+          <h1 class="page-title">Gerenciamento de Usuários</h1>
+          <div class="list-actions">
+            <div class="search-filter-wrapper">
+              <div class="search-bar-wrapper">
+                <input type="search" class="main-search" placeholder="Buscar por nome, email ou função..."
+                       [(ngModel)]="searchTerm" (input)="filterUsers()">
+                <svg class="search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+              </div>
+              <select class="sector-filter" [(ngModel)]="selectedSector" (change)="filterUsers()">
+                <option *ngFor="let sector of sectors" [value]="sector">{{ sector }}</option>
+              </select>
+            </div>
+            <button class="btn btn-primary add-user-btn" (click)="openAddUserModal()">
+              <span class="icon">+</span> Adicionar Colaborador
+            </button>
+          </div>
+        </header>
+  
+        <section class="user-grid">
+          <div class="user-card" *ngFor="let user of filteredUsers">
+            <div class="user-card-header">
+              <h3 class="user-name">{{ user.name }}</h3>
+              <span class="user-role">{{ user.role }}</span>
+            </div>
+            <p class="user-email">{{ user.email }}</p>
+            <div class="user-metrics">
+              <div class="metric-item">
+                <span class="metric-label">Nota Geral</span>
+                <div class="score-bar-bg">
+                  <div class="score-bar-fill" [style.width.%]="user.score"></div>
+                </div>
+                <span class="metric-value">{{ user.score }}%</span>
+              </div>
+              <div class="metric-item">
+                <span class="metric-label">Tempo de Empresa</span>
+                <span class="metric-value tenure">{{ calculateTenure(user.entryDate) }}</span>
+              </div>
+            </div>
+            <button class="btn btn-outline view-profile-btn" (click)="viewProfile(user)">
+              Ver Perfil
+            </button>
+          </div>
+  
+          <p *ngIf="filteredUsers.length === 0" class="no-users-message">
+            Nenhum colaborador encontrado com os filtros aplicados.
+          </p>
+        </section>
+  
+      </ng-container>
+  
+      <ng-template #detailView>
+        <div class="profile-view" *ngIf="selectedUser">
+  
+          <button class="btn back-button" (click)="goBackToList()">
+            <span class="icon">‹</span> Voltar para Lista
+          </button>
+  
+          <header class="profile-header">
+            <div class="profile-avatar">
+              <svg width="80" height="80" viewBox="0 0 40 40"> <circle cx="20" cy="20" r="20" fill="url(#avatarGradient)" /> <text x="20" y="26" font-size="20" fill="#fff" text-anchor="middle" font-weight="bold">{{ selectedUser.name.charAt(0) }}</text> </svg>
+            </div>
+            <div class="profile-info">
+              <h1 class="profile-name">{{ selectedUser.name }}</h1>
+              <p class="profile-role">{{ selectedUser.role }}</p>
+              <p class="profile-email">{{ selectedUser.email }}</p>
+              <p class="profile-tenure">Tempo de empresa: {{ calculateTenure(selectedUser.entryDate) }}</p>
+            </div>
+  
+            <div class="profile-score score-chart">
+              <h3 class="metric-title">Nota geral</h3>
+              <div class="donut-chart-wrapper small">
+                <svg class="donut-chart" viewBox="0 0 200 200">
+                  <circle
+                    class="donut-bg"
+                    cx="100" cy="100" r="80"
+                    fill="none"
+                    stroke="var(--glass)"
+                    stroke-width="20"
+                  />
+                  <circle
+                    class="donut-progress"
+                    cx="100" cy="100" r="80"
+                    fill="none"
+                    stroke="url(#donutGradientProfile)" stroke-width="20"
+                    stroke-linecap="round"
+                    [attr.stroke-dasharray]="502.4"
+                    [attr.stroke-dashoffset]="502.4 - (502.4 * selectedUser.score) / 100"
+                    transform="rotate(-90 100 100)"
+                  />
+                  <defs>
+                    <linearGradient id="donutGradientProfile" x1="0%" y1="0%" x2="100%" y2="0%">
+                      <stop offset="0%" style="stop-color:var(--primary)" />
+                      <stop offset="100%" style="stop-color:var(--accent)" />
+                    </linearGradient>
+                  </defs>
+                </svg>
+                <div class="donut-center">
+                  <div class="score-value small-score">{{ selectedUser.score }}%</div>
+                </div>
+              </div>
+            </div>
+  
+            <button class="btn btn-danger remove-user-btn" (click)="openRemoveUserModal(selectedUser)">
+              Remover da Equipe
+            </button>
+          </header>
+  
+          <section class="profile-sections">
+  
+            <div class="profile-section">
+              <h2 class="section-title">Histórico de Cursos</h2>
+              <ul class="course-history-list" *ngIf="selectedUser.courseHistory && selectedUser.courseHistory.length > 0; else noHistory">
+                <li *ngFor="let item of selectedUser.courseHistory" class="history-item">
+                  <span class="course-name">{{ item.courseName }}</span>
+                  <span class="course-status {{item.status}}">
+                    {{ item.status === 'completed' ? 'Concluído' : 'Em Andamento' }} ({{item.progress}}%)
+                  </span>
+                  <span class="course-date" *ngIf="item.completionDate">
+                    {{ item.completionDate | date:'dd/MM/yyyy' }}
+                  </span>
+                </li>
+              </ul>
+              <ng-template #noHistory>
+                <p class="empty-state">Nenhum histórico de curso registrado.</p>
+              </ng-template>
+            </div>
+  
+            <div class="profile-section">
+              <h2 class="section-title">Roadmap Atual</h2>
+              <p class="empty-state">Nenhum roadmap ativo no momento.</p>
+            </div>
+  
+            <div class="profile-section">
+              <div class="section-header">
+                <h2 class="section-title">Sugestões de Roadmap</h2>
+                <button class="btn btn-secondary suggest-btn" (click)="openSuggestRoadmapPanel()">
+                  Sugerir Roadmap
+                </button>
+              </div>
+              <ul class="suggestion-list" *ngIf="selectedUser.suggestedRoadmaps && selectedUser.suggestedRoadmaps.length > 0; else noSuggestions">
+                <li *ngFor="let suggestion of selectedUser.suggestedRoadmaps" class="suggestion-item">
+                  <span class="suggestion-icon">📌</span>
+                  <span class="suggestion-name">{{ suggestion.roadmapName }}</span>
+                  <span class="suggestion-status {{suggestion.status}}"> - {{ suggestion.status === 'pending' ? 'Aguardando início' : suggestion.status }}</span>
+                </li>
+              </ul>
+              <ng-template #noSuggestions>
+                <p class="empty-state">Nenhum roadmap sugerido.</p>
+              </ng-template>
+            </div>
+  
+          </section>
+  
+        </div>
+      </ng-template>
+  
+    </div> </div> <div class="modal-overlay" [class.active]="showAddUserModal" (click)="closeAddUserModal()">
+    <div class="modal-content add-user-modal" (click)="$event.stopPropagation()">
+      <h2 class="modal-title">Adicionar Novo Colaborador</h2>
+      <form (ngSubmit)="addUser()">
+        <div class="form-group"> <label for="newUserName">Nome Completo</label> <input type="text" id="newUserName" [(ngModel)]="newUser.name" name="name" required> </div>
+        <div class="form-group"> <label for="newUserRole">Função/Cargo</label> <input type="text" id="newUserRole" [(ngModel)]="newUser.role" name="role" required> </div>
+        <div class="form-group"> <label for="newUserEmail">Email Corporativo</label> <input type="email" id="newUserEmail" [(ngModel)]="newUser.email" name="email" required> </div>
+        <div class="form-group"> <label for="newUserEntryDate">Data de Entrada</label> <input type="date" id="newUserEntryDate" [ngModel]="newUser.entryDate | date:'yyyy-MM-dd'" (ngModelChange)="newUser.entryDate = $event" name="entryDate" required> </div>
+        <div class="form-group"> <label for="newUserPassword">Senha Provisória</label> <input type="password" id="newUserPassword" [(ngModel)]="newUser.password" name="password"> </div>
+        <div class="modal-actions"> <button type="button" class="btn btn-outline" (click)="closeAddUserModal()">Cancelar</button> <button type="submit" class="btn btn-primary">Adicionar</button> </div>
+      </form>
+    </div>
+  </div>
+  
+  <div class="modal-overlay" [class.active]="showRemoveUserModal" (click)="closeRemoveUserModal()">
+    <div class="modal-content remove-user-modal" (click)="$event.stopPropagation()">
+      <h2 class="modal-title">Confirmar Remoção</h2>
+      <p>Tem certeza que deseja remover <strong>{{ userToRemove?.name }}</strong> da equipe?</p>
+      <p class="warning-text">Esta ação não pode ser desfeita.</p>
+      <div class="modal-actions"> <button type="button" class="btn btn-outline" (click)="closeRemoveUserModal()">Cancelar</button> <button type="button" class="btn btn-danger" (click)="removeUser()">Remover</button> </div>
+    </div>
+  </div>
+  
+  <div class="side-panel-overlay" [class.open]="showSuggestRoadmapPanel" (click)="closeSuggestRoadmapPanel()">
+    <div class="side-panel" [class.open]="showSuggestRoadmapPanel" (click)="$event.stopPropagation()">
+      <header class="panel-header"> <h2 class="panel-title">Sugerir Roadmap para {{ selectedUser?.name }}</h2> <button class="close-panel-btn" (click)="closeSuggestRoadmapPanel()">×</button> </header>
+      <div class="panel-content">
+        <ul class="available-roadmaps-list">
+          <li *ngFor="let roadmap of availableRoadmaps" (click)="suggestRoadmap(roadmap)"> {{ roadmap.name }} </li>
+        </ul>
+        <p *ngIf="availableRoadmaps.length === 0" class="empty-state">Nenhum roadmap disponível para sugestão.</p>
+      </div>
+    </div>
+  </div>
