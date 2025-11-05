@@ -131,7 +131,8 @@ html, body {
 /* Formulário de Cadastro */
 .register-form {
   padding: 40px;
-  max-width: 800px; /* Aumentei para caber os dois blocos */
+  /* Largura ajustada para o formulário simples */
+  max-width: 450px; 
   width: 100%;
   box-sizing: border-box;
   
@@ -139,14 +140,16 @@ html, body {
 }
 
 .register-form h2 {
-  margin-bottom: 70px;
+  /* Margin-bottom ajustada */
+  margin-bottom: 30px; 
   font-size: 43px;
   color: #ffffff;
   text-align: center;
-
 }
 
-/* Divisão em dois blocos */
+/* O CSS para .form-columns e .form-column (do form antigo) 
+  pode ficar aqui sem problemas, já que o HTML está comentado.
+*/
 .form-columns {
   display: flex;
   gap: 20px;
@@ -154,7 +157,7 @@ html, body {
 }
 
 .form-column {
-  flex: 1; /* Divide o espaço igualmente entre os dois blocos */
+  flex: 1; 
 }
 
 .form-column.left {
@@ -171,7 +174,8 @@ html, body {
 
 .input-group {
   position: relative;
-  margin-bottom: 0; /* Removi o margin-bottom para evitar espaçamento extra */
+  /* Adicionado margin-bottom de volta para espaçar os inputs */
+  margin-bottom: 20px; 
 }
 
 .input-group input {
@@ -220,7 +224,8 @@ html, body {
 }
 
 .btn-register-form {
-  width: 50%;
+  /* Estilo do botão ajustado para o form simples */
+  width: 100%; 
   padding: 12px;
   border: none;
   border-radius: 25px;
@@ -230,14 +235,42 @@ html, body {
   font-weight: bold;
   cursor: pointer;
   transition: transform 0.2s, box-shadow 0.3s;
-  margin-left: 190px;
-  margin-top: 50px;
+  /* Margens ajustadas */
+  margin-left: 0;
+  margin-top: 20px; 
 }
 
 .btn-register-form:hover {
   transform: translateY(-2px);
   box-shadow: 0 5px 15px rgba(0, 198, 255, 0.4);
 }
+
+/* --- ESTILOS ADICIONADOS PARA MENSAGENS --- */
+.message-container {
+  width: 100%;
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+.error-message {
+  color: #ff6b6b;
+  font-size: 14px;
+  background-color: rgba(255, 107, 107, 0.15);
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid #ff6b6b;
+}
+
+.success-message {
+  color: #6bff9d;
+  font-size: 14px;
+  background-color: rgba(107, 255, 157, 0.15);
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid #6bff9d;
+}
+/* -------------------------------------- */
+
 
 /* Responsivo */
 @media (max-width: 768px) {
@@ -248,7 +281,7 @@ html, body {
 
   .register-form {
     width: 100%;
-    max-width: 400px;
+    /* Max-width já está ajustado acima */
     padding: 20px;
   }
 
