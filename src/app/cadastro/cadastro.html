@@ -7,7 +7,6 @@
 
 <div class="login-container">
 
-  <!-- Header -->
   <header class="header">
     <div class="logo">
       Grow<span class="highlight">Map</span>
@@ -20,96 +19,73 @@
       <a href="#">CONTATOS</a>
       <a href="#">PARCEIROS</a>
       <a href="#">HOME</a>
-      <a href="#">LOGIN</a>
-      <button class="btn-register active">Registrar-se</button>
+      <a routerLink="/login">LOGIN</a>
+      <button class="btn-register active" routerLink="/cadastro">Registrar-se</button>
     </nav>
   </header>
 
-  <!-- Main Content -->
   <main class="main-content">
     <div class="register-form">
-      <h2>Cadastrar Empresa</h2>
+      <h2>Criar Conta</h2> <br>
       <br>
-      <br>
 
-      <form>
-        <div class="form-columns">
-          <!-- Bloco Esquerdo: Informações da Empresa -->
-          <div class="form-column left">
-            <div class="input-group">
-              <input type="text" placeholder="Razão Social" />
-              <span class="icon">🏢</span>
-            </div>
+      <form (ngSubmit)="handleRegister()">
 
-            <div class="input-group">
-              <input type="text" placeholder="CNPJ" />
-              <span class="icon">🆔</span>
-            </div>
-
-            <div class="input-group">
-              <input type="tel" placeholder="Telefone" />
-              <span class="icon">📞</span>
-            </div>
-
-            <div class="input-group">
-              <input type="email" placeholder="E-mail" />
-              <span class="icon">✉️</span>
-            </div>
-
-            <div class="input-group">
-              <input type="password" placeholder="Senha" />
-              <span class="icon">🔒</span>
-            </div>
-
-            <div class="input-group">
-              <input type="password" placeholder="Confirmar Senha" />
-              <span class="icon">🔒</span>
-            </div>
-          </div>
-
-          <!-- Bloco Direito: Endereço + Quantidade de Funcionários + Setor -->
-          <div class="form-column right">
-            <div class="input-group">
-              <input type="text" placeholder="CEP" />
-              <span class="icon">📍</span>
-            </div>
-
-            <div class="input-group">
-              <input type="text" placeholder="Rua" />
-              <span class="icon">🏠</span>
-            </div>
-
-            <div class="input-group">
-              <input type="text" placeholder="Bairro" />
-              <span class="icon">🏘️</span>
-            </div>
-
-            <div class="input-group">
-              <input type="text" placeholder="Número" />
-              <span class="icon">#️⃣</span>
-            </div>
-
-            <div class="input-group">
-              <input type="number" placeholder="Quantidade de Funcionários" />
-              <span class="icon">👥</span>
-            </div>
-
-            <div class="input-group">
-              <input type="text" placeholder="Setor de Atuação" />
-              <span class="icon">🏭</span>
-            </div>
-          </div>
+        <div class="message-container" *ngIf="errorMessage">
+          <p class="error-message">{{ errorMessage }}</p>
         </div>
-     <br>
-     <br>
-        <div class="terms">
-          <label>
-            <input type="checkbox" /> Aceito os Termos de Uso e a Política de Privacidade
-          </label>
+        <div class="message-container" *ngIf="successMessage">
+          <p class="success-message">{{ successMessage }}</p>
         </div>
-     <br>
-        <button type="button" class="btn-register-form">Cadastrar Empresa</button>
+        <div class="input-group">
+          <input 
+            type="text" 
+            placeholder="Nome de Usuário" 
+            [(ngModel)]="username" 
+            name="username"
+          />
+          <span class="icon">👤</span>
+        </div>
+
+        <div class="input-group">
+          <input 
+            type="text" 
+            placeholder="E-mail" 
+            [(ngModel)]="email" 
+            name="email"
+          />
+          <span class="icon">✉️</span>
+        </div>
+
+        <div class="input-group">
+          <input 
+            type="password" 
+            placeholder="Senha" 
+            [(ngModel)]="password" 
+            name="password"
+          />
+          <span class="icon">🔒</span>
+        </div>
+
+        <div class="input-group">
+          <input 
+            type="password" 
+            placeholder="Confirmar Senha" 
+            [(ngModel)]="confirmPassword" 
+            name="confirmPassword"
+          />
+          <span class="icon">🔒</span>
+        </div>
+        
+        <button 
+          type="submit" 
+          class="btn-register-form"
+          [disabled]="successMessage"
+        >
+          Criar Conta
+        </button>
+
       </form>
-    </div>
+      </div>
   </main>
 </div>

@@ -252,6 +252,31 @@ html, body {
   line-height: 1.6;
   color: #cccccc;
 }
+.welcome-section p {
+  font-size: 16px;
+  line-height: 1.6;
+  color: #cccccc;
+}
+
+/* --- ADICIONADO PARA MENSAGEM DE ERRO --- */
+.error-container {
+  width: 100%;
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+.error-message {
+  color: #ff6b6b; /* Um vermelho claro e visível */
+  font-size: 14px;
+  font-weight: bold;
+  background-color: rgba(255, 107, 107, 0.15);
+  padding: 8px;
+  border-radius: 6px;
+  border: 1px solid #ff6b6b;
+  width: 130%; /* Para combinar com a largura dos inputs */
+  position: relative;
+  left: -15px; /* Ajuste para centralizar com os inputs */
+}
 
 /* Responsivo */
 @media (max-width: 768px) {

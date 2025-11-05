@@ -1,14 +1,11 @@
 <div class="background-video">
   <video id="bg-video" autoplay muted loop playsinline preload="auto">
     <source src="assets/Auravideo.mp4" type="video/mp4">
-    <!-- Opcional: adicione WebM para mais compatibilidade -->
-    <!-- <source src="assets/Auravideo.webm" type="video/webm"> -->
     Seu navegador não suporta vídeos HTML5.
   </video>
 </div>
 
 <div class="login-container">
-  <!-- Header -->
   <header class="header">
     <div class="logo">
       Grow<span class="highlight">Map</span>
@@ -26,19 +23,28 @@
     </nav>
   </header>
 
-  <!-- Main Content -->
   <main class="main-content">
     <div class="login-form">
       <h2>Login</h2>
 
-      <form>
+      <form (ngSubmit)="handleLogin()">
         <div class="input-group">
-          <input type="email" placeholder="E-mail" />
+          <input 
+            type="text" 
+            placeholder="E-mail ou Usuário" 
+            [(ngModel)]="email" 
+            name="email"
+          />
           <span class="icon">✉️</span>
         </div>
 
         <div class="input-group">
-          <input type="password" placeholder="Senha" />
+          <input 
+            type="password" 
+            placeholder="Senha" 
+            [(ngModel)]="password" 
+            name="password"
+          />
           <span class="icon">🔒</span>
         </div>
 
@@ -49,7 +55,10 @@
           <a routerLink="/recuperar-senha" class="forgot-password">Esqueceu a Senha?</a>
         </div>
 
-        <button type="button" class="btn-login">Entrar</button>
+        <div class="error-container" *ngIf="errorMessage">
+          <p class="error-message">{{ errorMessage }}</p>
+        </div>
+        <button type="submit" class="btn-login">Entrar</button>
       </form>
 
       <div class="signup-link">
