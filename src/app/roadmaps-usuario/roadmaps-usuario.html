@@ -1,215 +1,260 @@
 <nav class="navbar">
-    <div class="logo">
-      <div class="user-avatar">
-        <svg width="40" height="40" viewBox="0 0 40 40">
-          <circle cx="20" cy="20" r="20" fill="url(#avatarGradient)" />
-          <text x="20" y="26" font-size="20" fill="#fff" text-anchor="middle" font-weight="bold">
-            {{ userName.charAt(0) }}
-          </text>
-          <defs>
-            <linearGradient id="avatarGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" style="stop-color:#2DF8E0" />
-              <stop offset="100%" style="stop-color:#4E3DE0" />
-            </linearGradient>
-          </defs>
-        </svg>
-      </div>
-      <div class="user-info">
-        <div class="user-name">{{ userName }}</div>
-        <div class="user-role">{{ userRole }}</div>
-      </div>
+  <div class="logo">
+    <div class="user-avatar">
+      <svg width="40" height="40" viewBox="0 0 40 40">
+        <circle cx="20" cy="20" r="20" fill="url(#avatarGradient)" />
+        <text x="20" y="26" font-size="20" fill="#fff" text-anchor="middle" font-weight="bold">
+          {{ userName.charAt(0) }}
+        </text>
+        <defs>
+          <linearGradient id="avatarGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#2DF8E0" />
+            <stop offset="100%" style="stop-color:#4E3DE0" />
+          </linearGradient>
+        </defs>
+      </svg>
     </div>
-    <div class="nav-center" [class.open]="mobileMenuOpen">
-        <a [routerLink]="['/dashboard']" class="nav-link">Dashboard</a>
-        <a [routerLink]="['/cursos']" class="nav-link">Cursos</a>
-        <a [routerLink]="['/contatos']" class="nav-link">Suporte</a>
+    <div class="user-info">
+      <div class="user-name">{{ userName }}</div>
+      <div class="user-role">{{ userRole }}</div>
     </div>
-    <div class="nav-right">
-      <button class="theme-toggle" (click)="toggleTheme()" aria-label="Toggle theme">
-        <span class="theme-icon">{{ isDarkMode ? '☀️' : '🌙' }}</span>
-      </button>
-      <button class="logout-btn" aria-label="Logout">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
-          <polyline points="16 17 21 12 16 7" />
-          <line x1="21" y1="12" x2="9" y2="12" />
-        </svg>
-      </button>
-      <button class="hamburger" [class.active]="mobileMenuOpen" (click)="toggleMobileMenu()">
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
-    </div>
+  </div>
+  <div class="nav-center" [class.open]="mobileMenuOpen">
+      <a [routerLink]="['/dashboard']" class="nav-link">Dashboard</a>
+      <a [routerLink]="['/cursos']" class="nav-link">Cursos</a>
+      <a [routerLink]="['/suporte']" class="nav-link">Suporte</a>
+      <a [routerLink]="['/perfil']" class="nav-link">Perfil</a>
+  </div>
+  <div class="nav-right">
+    <button class="theme-toggle" (click)="toggleTheme()" aria-label="Toggle theme">
+      <span class="theme-icon">{{ isDarkMode ? '☀️' : '🌙' }}</span>
+    </button>
+    <button class="logout-btn" aria-label="Logout">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+        <polyline points="16 17 21 12 16 7" />
+        <line x1="21" y1="12" x2="9" y2="12" />
+      </svg>
+    </button>
+    <button class="hamburger" [class.active]="mobileMenuOpen" (click)="toggleMobileMenu()">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </div>
 </nav>
 
 <div class="roadmap-wrapper" [ngSwitch]="currentView">
 
-  <div class="global-back-container">
-    <a [routerLink]="['/dashboard']" class="btn global-back-button">
-      <span class="icon">‹</span> Voltar para o Dashboard
-    </a>
-  </div>
+<div class="global-back-container">
+  <a [routerLink]="['/dashboard']" class="btn global-back-button">
+    <span class="icon">‹</span> Voltar para o Dashboard
+  </a>
+</div>
 
-  <div *ngSwitchCase="'roadmap'">
+<div *ngSwitchCase="'roadmap'">
+  
+  <div class="roadmap-container" *ngIf="!selectedPhase; else phaseDetailView" @fadeSlide>
     
-    <div class="roadmap-container" *ngIf="!selectedPhase; else phaseDetailView" @fadeSlide>
+    <header class="roadmap-header">
+      <div>
+        <h2 class="roadmap-title">Meus Road Maps</h2>
+        <p class="roadmap-subtitle">Sua jornada de aprendizado, passo a passo.</p>
+      </div>
+      <button class="btn btn-primary create-roadmap-btn" (click)="createNewRoadmap()">
+        <span class="icon">✨</span> Criar Novo Roadmap
+      </button>
+    </header>
+
+    <nav class="course-tabs">
+      <button 
+        *ngFor="let course of allCourses"
+        class="course-tab-btn"
+        [class.active]="course.id === activeCourseId"
+        (click)="selectCourse(course.id)">
+        <span class="tab-icon">{{ course.icon }}</span>
+        <span class="tab-name">{{ course.name }}</span>
+      </button>
+    </nav>
+
+    <section class="roadmap-scroll-zone" *ngIf="activeCourse">
       
-      <header class="roadmap-header">
-        <div>
-          <h2 class="roadmap-title">Meus Road Maps</h2>
-          <p class="roadmap-subtitle">Sua jornada de aprendizado, passo a passo.</p>
+      <div class="journey-indicator">
+        <div class="indicator-icon">🎯</div>
+        <p class="indicator-text">Role para cima e suba na sua jornada!</p>
+      </div>
+
+      <div class="roadmap-journey" 
+           #journeyContainer
+           (scroll)="onJourneyScroll($event)">
+        
+        <div class="journey-background">
+          <div class="bg-particle" *ngFor="let p of [1,2,3,4,5,6,7,8]"></div>
         </div>
-        <button class="btn btn-primary create-roadmap-btn" (click)="createNewRoadmap()">
-          <span class="icon">✨</span> Criar Novo Roadmap
-        </button>
-      </header>
 
-      <nav class="course-tabs">
-        <button 
-          *ngFor="let course of allCourses"
-          class="course-tab-btn"
-          [class.active]="course.id === activeCourseId"
-          (click)="selectCourse(course.id)">
-          <span class="tab-icon">{{ course.icon }}</span>
-          <span class="tab-name">{{ course.name }}</span>
-        </button>
-      </nav>
+        <div class="journey-path-line"></div>
 
-      <section class="roadmap-content" *ngIf="activeCourse">
-        <div class="roadmap-path">
+        <div class="journey-phases">
+
+          <div class="journey-start">
+            <div class="start-orb">
+              <span class="start-icon">🚀</span>
+            </div>
+            <p class="start-text">Início da Jornada</p>
+          </div>
+
           <div 
             *ngFor="let phase of activeCourse.phases; let i = index"
-            class="roadmap-phase"
+            class="floating-phase"
             [class.completed]="phase.status === PhaseStatus.Completed"
             [class.in-progress]="phase.status === PhaseStatus.InProgress"
             [class.locked]="phase.status === PhaseStatus.Locked"
+            [class.left-side]="i % 2 === 0"
+            [class.right-side]="i % 2 !== 0"
+            [attr.data-phase-id]="phase.id"
             (click)="selectPhase(phase)">
             
-            <div class="phase-node">
-              <span class="phase-node-icon">{{ getIconForStatus(phase.status) }}</span>
-            </div>
-            <div class="phase-content">
-              <span class="phase-icon">{{ phase.icon }}</span>
-              <div class="phase-text">
-                <h4 class="phase-title">{{ phase.title }}</h4>
-                <p class="phase-description">{{ phase.description }}</p>
+            <div class="phase-orb">
+              <div class="orb-glow"></div>
+              <div class="orb-core">
+                <span class="orb-icon">{{ getIconForStatus(phase.status) }}</span>
               </div>
+              <div class="orb-ripple"></div>
+            </div>
+
+            <div class="phase-card">
+              <div class="phase-card-shine"></div>
+              <span class="phase-emoji">{{ phase.icon }}</span>
+              <div class="phase-info">
+                <h4 class="phase-name">{{ phase.title }}</h4>
+                <p class="phase-desc">{{ phase.description }}</p>
+              </div>
+              <div class="phase-arrow">→</div>
             </div>
 
           </div>
-        </div>
-      </section>
-    </div>
 
-    <ng-template #phaseDetailView>
-      <main class="phase-detail-container" *ngIf="selectedPhase" @fadeSlide>
-        <header class="phase-detail-header">
-          <button class="btn back-button" (click)="goBackToRoadmap()">
-            <span class="icon">‹</span> Voltar para a Trilha
-          </button>
-          <div class="phase-intro">
-            <span class="phase-intro-icon">{{ selectedPhase.icon }}</span>
-            <div>
-              <h2 class="phase-detail-title">{{ selectedPhase.title }}</h2>
-              <p class="phase-detail-subtitle">{{ selectedPhase.description }}</p>
-            </div>
+        </div>
+
+      </div>
+
+      <div class="scroll-hint" [class.hidden]="scrollHintHidden">
+        <div class="hint-arrow">↑</div>
+        <p>Role para cima</p>
+      </div>
+
+    </section>
+  </div>
+
+  <ng-template #phaseDetailView>
+    <main class="phase-detail-container" *ngIf="selectedPhase" @fadeSlide>
+      <header class="phase-detail-header">
+        <button class="btn back-button" (click)="goBackToRoadmap()">
+          <span class="icon">‹</span> Voltar para a Trilha
+        </button>
+        <div class="phase-intro">
+          <span class="phase-intro-icon">{{ selectedPhase.icon }}</span>
+          <div>
+            <h2 class="phase-detail-title">{{ selectedPhase.title }}</h2>
+            <p class="phase-detail-subtitle">{{ selectedPhase.description }}</p>
           </div>
-        </header>
-        <div class="phase-detail-content">
-          <section class="detail-card lessons-section">
-            <h3 class="detail-card-title">Aulas</h3>
-            <div class="progress-bar-container">
-              <div class="progress-bar-fill" [style.width.%]="getPhaseProgress(selectedPhase)"></div>
-            </div>
-            <span class="progress-text">{{ getPhaseProgress(selectedPhase) | number:'1.0-0' }}% Completo</span>
-            <ul class="lesson-list">
-              <li *ngFor="let lesson of selectedPhase.lessons" class="lesson-item">
-                <input type="checkbox" class="lesson-checkbox" id="lesson-{{lesson.id}}" [checked]="lesson.isCompleted" (change)="toggleLessonComplete(lesson)">
-                <label for="lesson-{{lesson.id}}" class="lesson-label">
-                  <span class="lesson-title">{{ lesson.title }}</span>
-                  <a [href]="lesson.url" class="lesson-link" target="_blank" (click)="$event.stopPropagation()">
-                    ({{ lesson.type === 'video' ? 'Assistir Vídeo' : 'Ler Artigo' }})
-                  </a>
-                </label>
-              </li>
-            </ul>
-          </section>
-          <section class="detail-card quiz-section" [class.locked]="!allLessonsCompleted(selectedPhase)">
-            <h3 class="detail-card-title">Quiz Final</h3>
-            <div class="quiz-lock-overlay" *ngIf="!allLessonsCompleted(selectedPhase)">
-              <span class="icon">🔒</span> Complete todas as aulas para liberar o quiz.
-            </div>
-            <div class="quiz-content" *ngIf="!selectedPhase.isQuizCompleted">
-              <button class="btn btn-primary" (click)="completeQuiz(selectedPhase)">
-                <span class="icon">✔️</span> Concluir Quiz (Simulação)
-              </button>
-            </div>
-            <div class="quiz-completed-message" *ngIf="selectedPhase.isQuizCompleted">
-              <span class="icon">🎉</span> Parabéns, você completou o quiz!
-            </div>
-          </section>
         </div>
-      </main>
-    </ng-template>
-  </div>
-
-  <div *ngSwitchCase="'new_tech_select'" class="creation-container" @fadeSlide>
-    
-    <header class="creation-header">
-      <div>
-        <h2 class="roadmap-title">Crie seu Roadmap</h2>
-        <p class="roadmap-subtitle">Qual tecnologia você quer aprender?</p>
+      </header>
+      <div class="phase-detail-content">
+        <section class="detail-card lessons-section">
+          <h3 class="detail-card-title">Aulas</h3>
+          <div class="progress-bar-container">
+            <div class="progress-bar-fill" [style.width.%]="getPhaseProgress(selectedPhase)"></div>
+          </div>
+          <span class="progress-text">{{ getPhaseProgress(selectedPhase) | number:'1.0-0' }}% Completo</span>
+          <ul class="lesson-list">
+            <li *ngFor="let lesson of selectedPhase.lessons" class="lesson-item">
+              <input type="checkbox" class="lesson-checkbox" id="lesson-{{lesson.id}}" [checked]="lesson.isCompleted" (change)="toggleLessonComplete(lesson)">
+              <label for="lesson-{{lesson.id}}" class="lesson-label">
+                <span class="lesson-title">{{ lesson.title }}</span>
+                <a [href]="lesson.url" class="lesson-link" target="_blank" (click)="$event.stopPropagation()">
+                  ({{ lesson.type === 'video' ? 'Assistir Vídeo' : 'Ler Artigo' }})
+                </a>
+              </label>
+            </li>
+          </ul>
+        </section>
+        <section class="detail-card quiz-section" [class.locked]="!allLessonsCompleted(selectedPhase)">
+          <h3 class="detail-card-title">Quiz Final</h3>
+          <div class="quiz-lock-overlay" *ngIf="!allLessonsCompleted(selectedPhase)">
+            <span class="icon">🔒</span> Complete todas as aulas para liberar o quiz.
+          </div>
+          <div class="quiz-content" *ngIf="!selectedPhase.isQuizCompleted">
+            <button class="btn btn-primary" (click)="completeQuiz(selectedPhase)">
+              <span class="icon">✔️</span> Concluir Quiz (Simulação)
+            </button>
+          </div>
+          <div class="quiz-completed-message" *ngIf="selectedPhase.isQuizCompleted">
+            <span class="icon">🎉</span> Parabéns, você completou o quiz!
+          </div>
+        </section>
       </div>
-      <button class="btn" (click)="cancelRoadmapCreation()">Cancelar</button>
-    </header>
+    </main>
+  </ng-template>
+</div>
 
-    <div class="tech-grid">
-      <div 
-        class="tech-card" 
-        *ngFor="let tech of placementTechs"
-        (click)="selectTechForPlacement(tech)">
-        
-        <div class="tech-icon">{{ tech.icon }}</div>
-        <h3 class="tech-name">{{ tech.name }}</h3>
-        <p class="tech-description">{{ tech.description }}</p>
-      </div>
+<div *ngSwitchCase="'new_tech_select'" class="creation-container" @fadeSlide>
+  
+  <header class="creation-header">
+    <div>
+      <h2 class="roadmap-title">Crie seu Roadmap</h2>
+      <p class="roadmap-subtitle">Qual tecnologia você quer aprender?</p>
     </div>
+    <button class="btn" (click)="cancelRoadmapCreation()">Cancelar</button>
+  </header>
 
-  </div>
-
-  <div *ngSwitchCase="'new_placement_quiz'" class="creation-container" @fadeSlide>
-    
-    <header class="creation-header">
-      <div>
-        <h2 class="roadmap-title">Quiz de Nivelamento: {{ selectedNewTech?.name }}</h2>
-        <p class="roadmap-subtitle">Responda o que souber. Vamos pular o que você já domina.</p>
-      </div>
-      <button class="btn" (click)="cancelRoadmapCreation()">Cancelar</button>
-    </header>
-
-    <div class="quiz-form" *ngIf="activePlacementQuiz">
+  <div class="tech-grid">
+    <div 
+      class="tech-card" 
+      *ngFor="let tech of placementTechs"
+      (click)="selectTechForPlacement(tech)">
       
-      <div class="quiz-question" *ngFor="let question of activePlacementQuiz.questions; let i = index">
-        <p class="question-text">{{ i + 1 }}. {{ question.text }}</p> <div class="quiz-options">
-          <label 
-            *ngFor="let option of question.options; let j = index"
-            class="quiz-option"
-            [class.selected]="activePlacementQuiz.userAnswers[i] === j">
-            <input 
-              type="radio" 
-              [name]="'question-' + i" 
-              (change)="activePlacementQuiz.userAnswers[i] = j">
-            {{ option }}
-          </label>
-        </div>
-      </div>
-
-      <button class="btn btn-primary" (click)="submitPlacementQuiz()" style="margin-top: 24px;">
-        Finalizar e Gerar Roadmap
-      </button>
-
+      <div class="tech-icon">{{ tech.icon }}</div>
+      <h3 class="tech-name">{{ tech.name }}</h3>
+      <p class="tech-description">{{ tech.description }}</p>
     </div>
   </div>
+
+</div>
+
+<div *ngSwitchCase="'new_placement_quiz'" class="creation-container" @fadeSlide>
+  
+  <header class="creation-header">
+    <div>
+      <h2 class="roadmap-title">Quiz de Nivelamento: {{ selectedNewTech?.name }}</h2>
+      <p class="roadmap-subtitle">Responda o que souber. Vamos pular o que você já domina.</p>
+    </div>
+    <button class="btn" (click)="cancelRoadmapCreation()">Cancelar</button>
+  </header>
+
+  <div class="quiz-form" *ngIf="activePlacementQuiz">
+    
+    <div class="quiz-question" *ngFor="let question of activePlacementQuiz.questions; let i = index">
+      <p class="question-text">{{ i + 1 }}. {{ question.text }}</p>
+      <div class="quiz-options">
+        <label 
+          *ngFor="let option of question.options; let j = index"
+          class="quiz-option"
+          [class.selected]="activePlacementQuiz.userAnswers[i] === j">
+          <input 
+            type="radio" 
+            [name]="'question-' + i" 
+            (change)="activePlacementQuiz.userAnswers[i] = j">
+          {{ option }}
+        </label>
+      </div>
+    </div>
+
+    <button class="btn btn-primary" (click)="submitPlacementQuiz()" style="margin-top: 24px;">
+      Finalizar e Gerar Roadmap
+    </button>
+
+  </div>
+</div>
 
 </div>

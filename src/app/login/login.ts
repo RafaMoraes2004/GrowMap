@@ -3,6 +3,11 @@ import { Router, RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms'; // Importar FormsModule
 import { CommonModule } from '@angular/common'; // Importar CommonModule
 
+// [IMPORTANTE] Importe seu cliente Supabase aqui.
+// O caminho 'src/supabase-client' é um exemplo,
+// ajuste para o local correto onde você inicializou o cliente no seu projeto.
+import { supabase } from '../../supabase';
+
 @Component({
   selector: 'app-login',
   // Adicionar FormsModule e CommonModule aos imports
@@ -24,6 +29,7 @@ export class Login implements AfterViewInit {
 
   ngAfterViewInit() {
     // Verifica se está no navegador antes de usar o DOM
+    // (Este seu código original está mantido)
     if (typeof document !== 'undefined') {
       const video = document.getElementById('bg-video') as HTMLVideoElement;
 
@@ -42,23 +48,38 @@ export class Login implements AfterViewInit {
     }
   }
 
-  // --- Nosso método de login ---
-  handleLogin() {
+  // --- Nosso método de login ATUALIZADO para Supabase ---
+  async handleLogin() {
     this.errorMessage = null; // Limpa erros anteriores
 
-    if (this.email === 'admin' && this.password === '123') {
-      // Login de usuário padrão
-      this.router.navigate(['/dashboard']);
+    try {
+      // Tenta fazer o login com Supabase usando os dados do formulário
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email: this.email,
+        password: this.password,
+      });
 
-    } else if (this.email === 'adminEmpresa' && this.password === '1234') {
-      // Login de usuário empresa
-      // Assumi que a rota seria '/dashboardEmpresa', altere se for outra
-      this.router.navigate(['/dashboardEmpresa']); 
+      if (error) {
+        // Se o Supabase retornar um erro (ex: senha errada)
+        console.error('Erro no login:', error.message);
+        // Usamos a sua div de erro para mostrar a falha
+        this.errorMessage = 'E-mail ou senha incorretos.';
+      
+      } else {
+        // Login bem-sucedido
+        console.log('Usuário logado com sucesso:', data.user);
+        
+        // [NOTA] A imagem redirecionava para '/catalog'.
+        // Mantive o redirecionamento do seu código original para '/dashboard'.
+        // Altere se o destino for outro.
+        this.router.navigate(['/dashboard']);
+      }
 
-    } else {
-      // Credenciais erradas
-      this.errorMessage = 'E-mail ou senha incorretos.';
+    } catch (error: any) {
+      // Captura outros erros (ex: rede ou falha inesperada)
+      console.error('Erro inesperado no login:', error);
+      this.errorMessage = 'Ocorreu um erro inesperado. Tente novamente.';
     }
   }
-  // -----------------------------
+  // ---------------------------------------------------
 }

@@ -14,6 +14,12 @@ import { MeusCursosComponent } from './meus-cursos/meus-cursos';
 import { RankComponent } from './rank/rank';
 import { QuizzesComponent } from './quizzes/quizzes';
 import { CursosComponent } from './cursos/cursos';
+import { ControleComponent } from './AdminFuncoes/controle/controle';
+import { UsuariosComponent } from './AdminFuncoes/usuarios/usuarios';
+import { SuporteComponent } from './suporte/suporte';
+import { PerfilComponent } from './perfil/perfil';
+import { EmpresaComponent } from './AdminFuncoes/configuracoes/configuracoes';
+import { SuporteEmpresaComponent } from './AdminFuncoes/adminsup/adminsup';
 
 
 export const routes: Routes = [
@@ -31,6 +37,12 @@ export const routes: Routes = [
 {path: 'meus', component: MeusCursosComponent},
 {path: 'rank', component: RankComponent},
 {path: 'quizzes', component: QuizzesComponent},
-{path: 'cursos', component: CursosComponent}
+{path: 'controle', component: ControleComponent},
+{path: 'cursos', component: CursosComponent},
+{path: 'usuarios', component: UsuariosComponent},
+{path: 'suporte', component: SuporteComponent},
+{path: 'perfil', component: PerfilComponent},
+{path: 'configuracoes', component: EmpresaComponent},
+{path: 'adminsup', component: SuporteEmpresaComponent },
 ];
 

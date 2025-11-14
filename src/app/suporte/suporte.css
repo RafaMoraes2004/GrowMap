@@ -1,0 +1,397 @@
+:host {
+    /* Estas são as suas variáveis (tema DARK - padrão) */
+    --bg: #071026;
+    --card-bg: #0f1724;
+    --text: #e6f0ff;
+    --muted: #9fb4d9;
+    --primary: #2df8e0;
+    --primary-600: #4e3de0;
+    --accent: #4e3de0;
+    --nav-bg: rgba(10, 14, 22, 0.7);
+    --shadow: rgba(0, 0, 0, 0.6);
+    --glass: rgba(255, 255, 255, 0.03);
+    --transition: 300ms cubic-bezier(0.22, 0.9, 0.36, 1);
+  
+    display: block;
+    min-height: 100vh;
+    font-family: 'Poppins', system-ui, -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  
+    transition: background-color var(--transition), color var(--transition);
+  }
+  
+  /* ========================================================
+   * DEFINIÇÃO DO TEMA CLARO (Vindo do Dashboard)
+   * ========================================================
+   */
+  :host([data-theme='light']) {
+    --bg: #f0f2f5; /* Um cinza muito claro para o fundo */
+    --card-bg: #ffffff; /* Cards brancos */
+    --text: #071026; /* Texto escuro (o fundo antigo) */
+    --muted: #6b7280; /* Um cinza médio para texto silenciado */
+    /* As cores primárias e de acento são mantidas */
+    --nav-bg: rgba(255, 255, 255, 0.7); /* Navbar clara com efeito glass */
+    --shadow: rgba(0, 0, 0, 0.1); /* Sombra muito mais suave */
+    --glass: rgba(0, 0, 0, 0.05); /* Borda/fundo sutil */
+  }
+  
+  .navbar {
+    position: sticky;
+    top: 0;
+    z-index: 60;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 24px;
+    background: linear-gradient(180deg, var(--nav-bg), rgba(0, 0, 0, 0));
+    backdrop-filter: blur(12px);
+    box-shadow: 0 6px 18px var(--shadow);
+    border-bottom: 1px solid var(--glass);
+    transition: background var(--transition), box-shadow var(--transition);
+  }
+  .navbar .logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .navbar .logo .user-avatar {
+    cursor: pointer;
+    transition: transform var(--transition);
+  }
+  .navbar .logo .user-avatar:hover {
+    transform: scale(1.05);
+  }
+  .navbar .logo .user-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .navbar .logo .user-info .user-name {
+    font-weight: 700;
+    font-size: 16px;
+    background: linear-gradient(90deg, var(--primary), var(--accent));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .navbar .logo .user-info .user-role {
+    font-size: 12px;
+    color: var(--muted);
+  }
+  .navbar .nav-center {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+  }
+  .navbar .nav-center .nav-link {
+    color: var(--muted);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 14px;
+    padding: 8px 12px;
+    border-radius: 8px;
+    transition: all var(--transition);
+    position: relative;
+  }
+  .navbar .nav-center .nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%) scaleX(0);
+    width: 80%;
+    height: 2px;
+    background: var(--primary);
+    transition: transform var(--transition);
+  }
+  .navbar .nav-center .nav-link:hover {
+    color: var(--primary);
+    transform: translateY(-2px);
+  }
+  .navbar .nav-center .nav-link:hover::after {
+    transform: translateX(-50%) scaleX(1);
+  }
+  .navbar .nav-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .navbar .nav-right .theme-toggle,
+  .navbar .nav-right .logout-btn {
+    background: var(--glass);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 10px;
+    border-radius: 10px;
+    color: var(--text);
+    cursor: pointer;
+    transition: all var(--transition);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .navbar .nav-right .theme-toggle:hover,
+  .navbar .nav-right .logout-btn:hover {
+    background: rgba(45, 248, 224, 0.1);
+    border-color: var(--primary);
+    transform: translateY(-2px);
+  }
+  .navbar .nav-right .theme-toggle .theme-icon {
+    font-size: 18px;
+  }
+  .navbar .nav-right .theme-toggle svg,
+  .navbar .nav-right .logout-btn svg {
+    display: block;
+  }
+  .navbar .nav-right .hamburger {
+    display: none;
+    background: transparent;
+    border: none;
+    padding: 10px;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+  .navbar .nav-right .hamburger span {
+    display: block;
+    height: 3px;
+    width: 24px;
+    background: var(--text);
+    margin: 5px 0;
+    border-radius: 2px;
+    transition: all 0.3s ease;
+  }
+  .navbar .nav-right .hamburger.active span:nth-child(1) {
+    transform: rotate(45deg) translate(8px, 8px);
+  }
+  .navbar .nav-right .hamburger.active span:nth-child(2) {
+    opacity: 0;
+  }
+  .navbar .nav-right .hamburger.active span:nth-child(3) {
+    transform: rotate(-45deg) translate(8px, -8px);
+  }
+  
+  /* Layout Principal (Vindo do Dashboard) */
+  .dashboard-main {
+    padding: 40px 0;
+  }
+  .dashboard-main .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+  
+  /* Header (Vindo do Dashboard) */
+  .dashboard-header {
+    margin-bottom: 32px;
+  }
+  .dashboard-header .dashboard-title {
+    font-size: 48px;
+    font-weight: 800;
+    background: linear-gradient(90deg, var(--primary), var(--accent));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin: 0;
+  }
+  
+  /* =========================
+     ESTILOS DE SUPORTE (ADICIONADOS)
+     ========================= */
+  
+  .support-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    align-items: stretch;
+  }
+  
+  .support-card {
+    background: var(--card-bg); /* Usa a variável do tema */
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 12px 32px var(--shadow); /* Usa a variável do tema */
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--glass); /* Usa a variável do tema */
+    transition: all var(--transition);
+  }
+  
+  .support-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 16px 40px var(--shadow);
+  }
+  
+  .support-card h3 {
+    text-align: left;
+    font-size: 1.8rem;
+    margin: 0 0 15px 0;
+    color: var(--primary); /* Título na cor primária */
+  }
+  
+  .support-card p {
+    color: var(--muted);
+    margin-bottom: 25px;
+    flex-grow: 1;
+    line-height: 1.6;
+  }
+  
+  .support-footer {
+    text-align: center;
+    margin-top: auto;
+  }
+  
+  /* Botão (Usa o botão do dashboard.css) */
+  .btn-primary {
+    /* MUDANÇA: Usando o azul "normal" que definimos antes */
+    background: #0d6efd;
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: 700;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s ease, background 0.3s ease, box-shadow 0.3s ease,
+      color 0.3s ease;
+    width: 100%;
+    font-size: 1.1rem;
+    padding: 12px 20px;
+    border-radius: 16px;
+    font-weight: 700;
+    box-shadow: 0 8px 20px rgba(13, 110, 253, 0.3);
+  }
+  
+  .btn-primary:hover {
+    background: #0a58ca; /* Azul "normal" escuro */
+    transform: translateY(-2px) scale(1.02);
+  }
+  
+  .support-form .form-group {
+    margin-bottom: 15px;
+  }
+  
+  .support-form input,
+  .support-form textarea {
+    width: 100%;
+    padding: 14px 16px;
+    border-radius: 12px;
+    border: 1px solid var(--glass);
+    background: var(--glass);
+    color: var(--text);
+    font-size: 1rem;
+    font-family: 'Poppins', sans-serif;
+    transition: all 0.3s ease;
+  }
+  
+  .support-form input:focus,
+  .support-form textarea:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 8px 24px rgba(45, 248, 224, 0.2); /* Sombra da cor primária */
+    background: rgba(45, 248, 224, 0.05);
+  }
+  
+  .support-form textarea {
+    min-height: 120px;
+    resize: vertical;
+  }
+  
+  .contact-info-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    flex-grow: 1;
+  }
+  
+  .contact-info-list li {
+    color: var(--text);
+    margin-bottom: 12px;
+    font-size: 1.05rem;
+    line-height: 1.6;
+  }
+  
+  .contact-info-list strong {
+    color: var(--muted);
+    display: inline-block;
+    min-width: 90px;
+    font-weight: 600;
+  }
+  
+  /* =========================
+     ANIMAÇÕES (Vindo do Dashboard)
+     ========================= */
+  
+  /* ... (Todas as animações @keyframes do dashboard.css estão aqui) ... */
+  
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  /* ... (outras animações) ... */
+  
+  .fade-in {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  
+  /* =========================
+     RESPONSIVO (Vindo do Dashboard)
+     ========================= */
+  
+  @media (max-width: 900px) {
+    .navbar .nav-center {
+      display: none;
+    }
+    .navbar .nav-center.open {
+      display: flex;
+      flex-direction: column;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      width: 100%;
+      background: var(--nav-bg);
+      backdrop-filter: blur(12px);
+      padding: 20px;
+      gap: 12px;
+      border-top: 1px solid var(--glass);
+    }
+    .navbar .nav-right .hamburger {
+      display: inline-block;
+    }
+  
+    .dashboard-header .dashboard-title {
+      font-size: 36px;
+    }
+  
+    /* ESTILO DE SUPORTE RESPONSIVO (ADICIONADO) */
+    .support-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+  
+  @media (max-width: 560px) {
+    .dashboard-header .dashboard-title {
+      font-size: 28px;
+    }
+  
+    .navbar {
+      padding: 12px 16px;
+    }
+    .navbar .logo .user-info .user-name {
+      font-size: 14px;
+    }
+    .navbar .logo .user-info .user-role {
+      font-size: 11px;
+    }
+  }

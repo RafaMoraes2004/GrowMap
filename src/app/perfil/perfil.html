@@ -1,0 +1,219 @@
+<nav class="navbar">
+    <div class="logo">
+      <div class="user-avatar">
+        <svg width="40" height="40" viewBox="0 0 40 40">
+          <circle cx="20" cy="20" r="20" fill="url(#avatarGradient)" />
+          <text
+            x="20"
+            y="26"
+            font-size="20"
+            fill="#fff"
+            text-anchor="middle"
+            font-weight="bold"
+          >
+            {{ userName.charAt(0) }}
+          </text>
+          <defs>
+            <linearGradient
+              id="avatarGradient"
+              x1="0%"
+              y1="0%"
+              x2="100%"
+              y2="100%"
+            >
+              <stop offset="0%" style="stop-color: #2df8e0" />
+              <stop offset="100%" style="stop-color: #4e3de0" />
+            </linearGradient>
+          </defs>
+        </svg>
+      </div>
+      <div class="user-info">
+        <div class="user-name">{{ userName }}</div>
+        <div class="user-role">{{ userRole }}</div>
+      </div>
+    </div>
+  
+    <div class="nav-center" [class.open]="mobileMenuOpen">
+      <a [routerLink]="['/dashboard']" class="nav-link">Dashboard</a>
+      <a [routerLink]="['/cursos']" class="nav-link">Cursos</a>
+      <a [routerLink]="['/suporte']" class="nav-link">Suporte</a>
+      <a [routerLink]="['/perfil']" class="nav-link" routerLinkActive="active"
+        >Perfil</a
+      >
+    </div>
+  
+    <div class="nav-right">
+      <button
+        class="theme-toggle"
+        (click)="toggleTheme()"
+        aria-label="Toggle theme"
+      >
+        <span class="theme-icon">{{ isDarkMode ? "☀️" : "🌙" }}</span>
+      </button>
+      <button class="logout-btn" aria-label="Logout">
+        <svg
+          width="20"
+          height="20"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+          <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+          <polyline points="16 17 21 12 16 7" />
+          <line x1="21" y1="12" x2="9" y2="12" />
+        </svg>
+      </button>
+      <button
+        class="hamburger"
+        [class.active]="mobileMenuOpen"
+        (click)="toggleMobileMenu()"
+      >
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </nav>
+  
+  <main class="dashboard-main">
+    <div class="container">
+      <header class="dashboard-header">
+        <h1 class="dashboard-title">Meu Perfil</h1>
+      </header>
+  
+      <section class="profile-section fade-in visible">
+        <form class="profile-card" (submit)="saveProfile($event)">
+          <h3>Informações da Conta</h3>
+          <p>
+            Mantenha seus dados atualizados. Alterações de e-mail e senha exigirão
+            confirmação.
+          </p>
+  
+          <div class="profile-grid">
+            <div class="field-group">
+              <label for="firstName">Nome</label>
+              <input
+                type="text"
+                id="firstName"
+                [(ngModel)]="userProfile.firstName"
+                name="firstName"
+              />
+            </div>
+            <div class="field-group">
+              <label for="lastName">Sobrenome</label>
+              <input
+                type="text"
+                id="lastName"
+                [(ngModel)]="userProfile.lastName"
+                name="lastName"
+              />
+            </div>
+          </div>
+  
+          <div class="field-group">
+            <label for="email">E-mail</label>
+            <input
+              type="email"
+              id="email"
+              [(ngModel)]="userProfile.email"
+              name="email"
+            />
+          </div>
+  
+          <div class="field-group">
+            <label for="password">Nova Senha</label>
+            <div class="password-wrapper">
+              <input
+                [type]="showPassword ? 'text' : 'password'"
+                id="password"
+                [(ngModel)]="passwordField"
+                name="password"
+                placeholder="Digite a nova senha (opcional)"
+              />
+              <button
+                type="button"
+                class="btn-icon"
+                (click)="toggleShowPassword()"
+                aria-label="Ver senha"
+              >
+                <svg
+                  *ngIf="!showPassword"
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                  <circle cx="12" cy="12" r="3"></circle>
+                </svg>
+                <svg
+                  *ngIf="showPassword"
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path
+                    d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"
+                  ></path>
+                  <line x1="1" y1="1" x2="23" y2="23"></line>
+                </svg>
+              </button>
+            </div>
+          </div>
+  
+          <h3>Informações da Empresa</h3>
+  
+          <div class="profile-grid">
+            <div class="field-group">
+              <label for="company">Empresa</label>
+              <input
+                type="text"
+                id="company"
+                [(ngModel)]="userProfile.company"
+                name="company"
+                readonly
+              />
+            </div>
+            <div class="field-group">
+              <label for="role">Cargo</label>
+              <input
+                type="text"
+                id="role"
+                [(ngModel)]="userProfile.role"
+                name="role"
+                readonly
+              />
+            </div>
+          </div>
+  
+          <div class="field-group">
+            <label for="joinDate">Data de Entrada</label>
+            <input
+              type="text"
+              id="joinDate"
+              [value]="formattedJoinDate"
+              name="joinDate"
+              readonly
+            />
+          </div>
+  
+          <div class="form-actions">
+            <button
+              type="button"
+              class="btn-secondary"
+              (click)="savePassword()"
+            >
+              Salvar Senha
+            </button>
+            <button type="submit" class="btn-primary">Salvar Alterações</button>
+          </div>
+        </form>
+      </section>
+    </div>
+  </main>

@@ -1,0 +1,138 @@
+<nav class="navbar">
+    <div class="logo">
+      <div class="user-avatar">
+        <svg width="40" height="40" viewBox="0 0 40 40">
+          <circle cx="20" cy="20" r="20" fill="url(#avatarGradient)" />
+          <text
+            x="20"
+            y="26"
+            font-size="20"
+            fill="#fff"
+            text-anchor="middle"
+            font-weight="bold"
+          >
+            {{ userName.charAt(0) }}
+          </text>
+          <defs>
+            <linearGradient
+              id="avatarGradient"
+              x1="0%"
+              y1="0%"
+              x2="100%"
+              y2="100%"
+            >
+              <stop offset="0%" style="stop-color: #2df8e0" />
+              <stop offset="100%" style="stop-color: #4e3de0" />
+            </linearGradient>
+          </defs>
+        </svg>
+      </div>
+      <div class="user-info">
+        <div class="user-name">{{ userName }}</div>
+        <div class="user-role">{{ userRole }}</div>
+      </div>
+    </div>
+    <div class="nav-center" [class.open]="mobileMenuOpen">
+      <a [routerLink]="['/controle']" class="nav-link">Painel de Controle</a>
+      <a [routerLink]="['/usuarios']" class="nav-link">Usuarios</a>
+      <a
+        [routerLink]="['/avaliacao']"
+        class="nav-link"
+        routerLinkActive="active"
+        >Suporte</a
+      >
+      <a [routerLink]="['/configuracoes']" class="nav-link">Configurações</a>
+    </div>
+    <div class="nav-right">
+      <button
+        class="theme-toggle"
+        (click)="toggleTheme()"
+        aria-label="Toggle theme"
+      >
+        <span class="theme-icon">{{ isDarkMode ? "☀️" : "🌙" }}</span>
+      </button>
+      <button class="logout-btn" aria-label="Logout">
+        <svg
+          width="20"
+          height="20"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+          <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+          <polyline points="16 17 21 12 16 7" />
+          <line x1="21" y1="12" x2="9" y2="12" />
+        </svg>
+      </button>
+      <button
+        class="hamburger"
+        [class.active]="mobileMenuOpen"
+        (click)="toggleMobileMenu()"
+      >
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </nav>
+  
+  <div class="dashboard-wrapper">
+    <header class="dashboard-header">
+      <h1 class="dashboard-title">Central de Suporte</h1>
+    </header>
+  
+    <section class="support-grid fade-in visible">
+      <div class="support-card">
+        <h3>Chat ao Vivo</h3>
+        <p>
+          Fale diretamente com um de nossos especialistas em tempo real. Ideal para
+          dúvidas rápidas e problemas técnicos.
+        </p>
+        <div class="support-footer">
+          <button class="btn-primary" (click)="$event.preventDefault()">
+            <span>Iniciar Chat</span>
+          </button>
+        </div>
+      </div>
+  
+      <div class="support-card form-card">
+        <h3>Enviar um Ticket</h3>
+        <p>
+          Para questões detalhadas ou não urgentes, preencha o formulário e nossa
+          equipe responderá por e-mail.
+        </p>
+        <form class="support-form" (submit)="$event.preventDefault()">
+          <div class="form-group">
+            <input type="text" name="subject" placeholder="Assunto" required />
+          </div>
+          <div class="form-group">
+            <textarea
+              name="message"
+              placeholder="Descreva seu problema..."
+              rows="5"
+              required
+            ></textarea>
+          </div>
+          <div class="support-footer">
+            <button type="submit" class="btn-primary">
+              <span>Enviar E-mail</span>
+            </button>
+          </div>
+        </form>
+      </div>
+  
+      <div class="support-card">
+        <h3>Contato Direto</h3>
+        <p>
+          Para questões administrativas ou urgências, utilize nossos canais diretos
+          em horário comercial.
+        </p>
+        <ul class="contact-info-list">
+          <li><strong>Telefone:</strong> +55 (15) 9XXXX-XXXX</li>
+          <li><strong>E-mail:</strong> suporte@growmap.com.br</li>
+          <li><strong>Horário:</strong> Seg. à Sex. das 09h às 18h</li>
+        </ul>
+      </div>
+    </section>
+  </div>

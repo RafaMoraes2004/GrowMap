@@ -1,0 +1,343 @@
+/* ========================================================
+ * VARIÁVEIS DE TEMA (Copiado de controle.css)
+ * ======================================================== */
+ :host {
+    --bg: #071026;
+    --card-bg: #0f1724;
+    --text: #e6f0ff;
+    --muted: #9fb4d9;
+    --primary: #2df8e0;
+    --primary-600: #4e3de0;
+    --accent: var(--primary-600);
+    --nav-bg: rgba(10, 14, 22, 0.7);
+    --shadow: rgba(0, 0, 0, 0.6);
+    --glass: rgba(255, 255, 255, 0.03);
+    --transition: 300ms cubic-bezier(0.22, 0.9, 0.36, 1);
+    --dot-online: #2df8e0;
+    --dot-busy: #f8e02d;
+    --dot-offline: #f82d50;
+  
+    display: block;
+    min-height: 100vh;
+    font-family: 'Poppins', system-ui, -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    transition: background-color var(--transition), color var(--transition);
+  }
+  
+  :host([data-theme='light']) {
+    --bg: #f0f2f5;
+    --card-bg: #ffffff;
+    --text: #071026;
+    --muted: #6b7280;
+    --nav-bg: rgba(255, 255, 255, 0.7);
+    --shadow: rgba(0, 0, 0, 0.1);
+    --glass: rgba(0, 0, 0, 0.05);
+    --dot-online: #10b981;
+    --dot-busy: #f59e0b;
+    --dot-offline: #ef4444;
+  }
+  
+  /* ========================================================
+   * NAVBAR STYLES (Copiado de controle.css)
+   * ======================================================== */
+  .navbar {
+    position: sticky;
+    top: 0;
+    z-index: 60;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 24px;
+    background: linear-gradient(180deg, var(--nav-bg), rgba(0, 0, 0, 0));
+    backdrop-filter: blur(12px);
+    box-shadow: 0 6px 18px var(--shadow);
+    border-bottom: 1px solid var(--glass);
+    transition: background var(--transition), box-shadow var(--transition);
+  }
+  .navbar .logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .navbar .user-avatar {
+    cursor: pointer;
+    transition: transform var(--transition);
+  }
+  .navbar .user-avatar:hover {
+    transform: scale(1.05);
+  }
+  .navbar .user-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .navbar .user-name {
+    font-weight: 700;
+    font-size: 16px;
+    background: linear-gradient(90deg, var(--primary), var(--accent));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .navbar .user-role {
+    font-size: 12px;
+    color: var(--muted);
+  }
+  .navbar .nav-center {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+  }
+  .navbar .nav-link {
+    color: var(--muted);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 14px;
+    padding: 8px 12px;
+    border-radius: 8px;
+    transition: all var(--transition);
+    position: relative;
+  }
+  .navbar .nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%) scaleX(0);
+    width: 80%;
+    height: 2px;
+    background: var(--primary);
+    transition: transform var(--transition);
+  }
+  .navbar .nav-link:hover {
+    color: var(--primary);
+    transform: translateY(-2px);
+  }
+  .navbar .nav-link:hover::after {
+    transform: translateX(-50%) scaleX(1);
+  }
+  /* Estilo do link ativo (novo) */
+  .navbar .nav-center .nav-link[routerLinkActive='active'] {
+    color: var(--primary);
+    font-weight: 700;
+  }
+  .navbar .nav-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .navbar .theme-toggle,
+  .navbar .logout-btn {
+    background: var(--glass);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 10px;
+    border-radius: 10px;
+    color: var(--text);
+    cursor: pointer;
+    transition: all var(--transition);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .navbar .theme-toggle:hover,
+  .navbar .logout-btn:hover {
+    background: rgba(45, 248, 224, 0.1);
+    border-color: var(--primary);
+    transform: translateY(-2px);
+  }
+  .navbar .theme-icon {
+    font-size: 18px;
+  }
+  .navbar .logout-btn svg {
+    display: block;
+  }
+  .navbar .hamburger {
+    display: none;
+    background: transparent;
+    border: none;
+    padding: 10px;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+  .navbar .hamburger span {
+    display: block;
+    height: 3px;
+    width: 24px;
+    background: var(--text);
+    margin: 5px 0;
+    border-radius: 2px;
+    transition: all 0.3s ease;
+  }
+  .navbar .hamburger.active span:nth-child(1) {
+    transform: rotate(45deg) translate(8px, 8px);
+  }
+  .navbar .hamburger.active span:nth-child(2) {
+    opacity: 0;
+  }
+  .navbar .hamburger.active span:nth-child(3) {
+    transform: rotate(-45deg) translate(8px, -8px);
+  }
+  
+  /* ========================================================
+   * LAYOUT GERAL (Copiado de controle.css)
+   * ======================================================== */
+  .dashboard-wrapper {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 24px;
+  }
+  
+  .dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+    /* Centraliza o título (do perfil.css) */
+    text-align: center;
+    justify-content: center;
+  }
+  
+  .dashboard-title {
+    font-size: 48px;
+    font-weight: 800;
+    color: var(--text);
+    margin: 0;
+    background: linear-gradient(90deg, var(--primary), var(--accent));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: inline-block;
+  }
+  
+  /* ========================================================
+   * NOVOS ESTILOS DE PERFIL (Copiado de perfil.css)
+   * ======================================================== */
+  .profile-section {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  
+  .profile-card {
+    background: var(--card-bg);
+    padding: 30px 40px;
+    border-radius: 20px;
+    box-shadow: 0 12px 32px var(--shadow);
+    border: 1px solid var(--glass);
+    transition: all var(--transition);
+    text-align: left;
+  }
+  
+  .profile-card h3 {
+    text-align: left;
+    font-size: 1.8rem;
+    margin: 20px 0 10px 0;
+    color: var(--primary);
+  }
+  .profile-card h3:first-of-type {
+    margin-top: 0;
+  }
+  
+  .profile-card p {
+    color: var(--muted);
+    margin-bottom: 30px;
+    line-height: 1.6;
+    text-align: left;
+  }
+  
+  .profile-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+  }
+  
+  .field-group {
+    margin-bottom: 24px;
+  }
+  
+  .field-label {
+    display: block;
+    font-weight: 600;
+    color: var(--muted);
+    font-size: 0.9rem;
+    margin-bottom: 8px;
+  }
+  
+  /* Caixa de valor estático */
+  .field-value {
+    width: 100%;
+    padding: 14px 16px;
+    border-radius: 12px;
+    border: 1px solid var(--glass);
+    background: var(--glass);
+    color: var(--text);
+    font-size: 1rem;
+    font-family: 'Poppins', sans-serif;
+    min-height: 51px;
+    display: flex;
+    align-items: center;
+    box-sizing: border-box; /* Garante que o padding não quebre o layout */
+  }
+  
+  /* ========================================================
+   * ANIMAÇÕES E RESPONSIVO (Copiado de controle.css)
+   * ======================================================== */
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  .fade-in {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  
+  @media (max-width: 900px) {
+    /* Navbar Responsiva */
+    .navbar .nav-center {
+      display: none;
+    }
+    .navbar .nav-center.open {
+      display: flex;
+      flex-direction: column;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      width: 100%;
+      background: var(--nav-bg);
+      backdrop-filter: blur(12px);
+      padding: 20px;
+      gap: 12px;
+      border-top: 1px solid var(--glass);
+    }
+    .navbar .nav-right .hamburger {
+      display: inline-block;
+    }
+    .dashboard-title {
+      font-size: 36px;
+    }
+  }
+  
+  @media (max-width: 600px) {
+    .dashboard-wrapper {
+      padding: 16px;
+    }
+    .dashboard-title {
+      font-size: 24px;
+    }
+    .profile-card {
+      padding: 20px;
+    }
+    .profile-grid {
+      grid-template-columns: 1fr;
+      gap: 0;
+    }
+  }
